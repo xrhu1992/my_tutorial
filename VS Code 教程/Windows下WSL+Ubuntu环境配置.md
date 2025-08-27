@@ -1,5 +1,5 @@
 # **Windows下WSL+Ubuntu环境配置**
-
+适用于 Linux 的 Windows 子系统WSL（Windows Subsystem for Linux）是 Windows 的一项功能，可用于在 Windows 计算机上运行 Linux 环境，而无需单独的虚拟机或双重启动。 WSL 旨在为想要同时使用 Windows 和 Linux 的开发人员提供无缝高效的体验。
 ## 安装WSL
 1. 安装wsl2之前，首先要配置系统设置，在“控制面板”>“程序”>“程序和功能”>“启用或关闭Windows功能”，勾选“适用于Linux的Windows子系统”和“虚拟机平台”；
 2. 重启计算机以生效；
@@ -7,9 +7,9 @@
 `wsl --install`
 
 ## Ubuntu系统安装及配置
-1. 在Microsoft Store中下载ubuntu;
-2. 下载完成后打开Ubuntu，需要配置用户名称和密码;
-3. 如果C盘不够用，可以迁移到D盘,powershell下运行以下命令
+1. 在Microsoft Store中下载ubuntu
+2. 下载完成后打开Ubuntu，需要配置用户名称和密码
+3. 如果C盘不够用，可以迁移到D盘，powershell下运行以下命令
 ```
 # 导出
 wsl --export Ubuntu-22.04 "D:\linux\Ubuntu-22.04\export.tar"
