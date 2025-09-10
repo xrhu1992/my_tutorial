@@ -24,7 +24,7 @@
   - /usr/local: 和opt目录作用相同, 安装第三方软件
 ## 命令行
 * 环境变量PATH
-```
+```bash
 # 通过 echo 命令可以查看环境变量 PATH 中的值, 在shell中变量名前加 $ 就是取值
 # $:普通用户 #:root用户
 xrhu@xrhu:~$ echo $PATH
@@ -47,6 +47,13 @@ xrhu@xrhu:~$ echo $PATH
 * 复制/移动
     - cp 拷贝，-r 如果拷贝到的目录不存在则创建该目录
     - mv 移动/重命名
+* 软/硬链接（相当于快捷方式，软连接一般用于目录，硬链接只用于文件）
+  - ln -s 源文件路径 软链接文件的名字(可以带路径)
+  - ln 源文件 硬链接文件的名字(可以带路径)
+  ```bash
+  # WSL下在Linux home目录下创建一个windows DeskTop的软链接
+  xrhu@xrhu:~$ ln -s /mnt/c/Users/xrhu/Desktop WindowsDesktop
+  ```
 * 查看文件内容
   - cat 将文件内容显示到终端(适合小文件)
   - more 比cat要高级一点, 可以翻屏查看文件中的内容
@@ -63,7 +70,7 @@ xrhu@xrhu:~$ echo $PATH
 * 输出重定向
   - \>: 将文件内容写入到指定文件中, 如果文件中已有数据, 则会使用新数据覆盖原数据
   - \>>: 将输出的内容追加到指定的文件尾部
-  ```
+  ```bash
   # 将当前日期覆盖式写入test.txt文件中，若没有该文件则会自动创建该文件
   xrhu@xrhu:~$ date > test.txt
   xrhu@xrhu:~$ cat test.txt

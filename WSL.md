@@ -28,7 +28,7 @@ wsl -l -o  //列出可用的 Linux 发行版
 wsl -l -s  //列出已安装的发行版
 wsl --set-default-version <Version>  //设置wsl的默认版本，<Version>可替换为数字 1 或 2。 例如wsl --set-default-version 2。
 wsl --status  //检查 WSL 状态
-wsl --shutdown   //重启
+wsl --shutdown   //关闭WSL
 wsl --version  //检查 WSL 版本
 wsl -l -v  //查看已经安装的发行版
 wsl --unregister <DistributionName>  //<DistributionName>为要注销的发行版名称
