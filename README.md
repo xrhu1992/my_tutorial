@@ -10,7 +10,8 @@
     >[Markdown数学公式2](https://zhuanlan.zhihu.com/p/450465546)<br>
     >[Markdown数学公式3](https://www.cnblogs.com/1024th/p/11623258.html)
 * ##  Language
-  - [ ] Design Partterns
+  - [ ] [Design Patterns](DesignPatterns.md)
+    > [爱编程的大丙](https://subingwen.cn/design-patterns/#3-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F)
   - [ ] [Python](Python.md)
     > [Python简明教程](https://github.com/LenKiMo/byte-of-python)
   - [ ] C++11
