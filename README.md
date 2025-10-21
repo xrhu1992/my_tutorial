@@ -1,7 +1,8 @@
 # Tutorial
 * ## Coding
   - [x] [WSL](WSL.md)
-  - [x] [Linux](Linux.md) & [常用指令](Linux常用指令.md)
+  - [x] [Linux简介](Linux.md) & [常用指令大全](Linux常用指令.md)
+  - [ ] [Git](Git.md)
   - [x] [CMake](CMake.md)
 
 * ## Language
