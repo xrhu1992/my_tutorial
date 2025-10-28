@@ -29,6 +29,7 @@
 * ## Math
   - [ ] [Linear Algebra](LinearAlgebra.md)
     > [线性代数：原理与应用](doc/LinearAlgebra.pdf)<br>  
+    > [线性代数：原理与应用(讲义)](https://www.bananaspace.org/wiki/%E8%AE%B2%E4%B9%89:%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0)<br>
     > [matrixcookbook](doc/matrixcookbook.pdf)<br>  
     > [The-Art-of-Linear-Algebra-zh-CN](doc/The-Art-of-Linear-Algebra-zh-CN.pdf)
 
