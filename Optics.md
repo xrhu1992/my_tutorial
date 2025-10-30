@@ -16,8 +16,11 @@
   ```math
   \theta=arcsin\frac{n2}{n1}
   ```
-  <center><img src="https://my-tutorial-1384742255.cos.ap-nanjing.myqcloud.com/Optics/Reflexion_totale_interne.png" title="全反射" width = "300"></center>
-  <center>全反射</center>
+  <center>
+  <img src="https://my-tutorial-1384742255.cos.ap-nanjing.myqcloud.com/Optics/Reflexion_totale_interne.png" title="全反射" width = "300">
+  <br>
+  全反射
+  </center>
 * 全反射镜（如直角棱镜）反射效率高于镀膜平面反射镜（反射效率约90%）
   
 ## 折射棱镜与
