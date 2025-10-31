@@ -14,8 +14,8 @@
 
 ## 兼容HTML语法
 * 文本居中 
-  `<center>text</text>`
-  <center>text</text>
+  `<center>text</center>`
+  <center>text</center>
 * 换行 
   `<br>`
 * 插入图片并缩放
