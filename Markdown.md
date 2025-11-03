@@ -32,7 +32,7 @@
 > [!NOTE]
 > 注意
 ``` markdown
-> [!NOTE]
+> [!TIP]
 > 建议
 ```
 > [!TIP]
