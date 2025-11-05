@@ -5,13 +5,13 @@
 **RAG(Retrieval-Augmented Generation) 检索-增强生成**，是一种结合了信息检索技术与语言生成模型的人工智能技术。通过**从外部知识库中检索相关信息，并将其作为Prompt输入给LLMs，以增强模型处理知识密集型任务的能力**，如知识库、智能客服等。
 
 
-<center>
+<p align="center">
 <img src="pic/RAG/RAG_flow.png" width = "700">
 <img src="pic/RAG/RAG_before_quiz.png" width = "700">
 <img src="pic/RAG/RAG_after_quiz.png" width = "700">
 <br>
 RAG的流程
-</center>
+</p>
 
 > [!NOTE]
 > 与一般的LLM的问答不同的是，RAG将输入给LLM的提示词分为**用户问题/任务 **（用户输入）和**系统提示词**（限制词和其它模型生成的提示词），二者合并输入给LLM以提高其对某一类问题的命中率，并减少LLM幻觉（一本正经胡说八道）的概率。 系统提示词可以是：
@@ -36,7 +36,7 @@ RAG的流程
 * 知识库Chunking，得到片段（Chunk），Chunking可以按段落、字数、页数、文章等方式
 * 将Chunk向量化，以便于查找与用户问题Chunk相关的知识库Chunk
 * 使用Embedding模型把Chunk向量化后，存入Vector Database（存储了向量和对应的Chunk原文）
-* 相似度计算：欧式距离、余玄角度、点积（考虑距离和角度的结合）
+* 相似度计算：欧式距离(Euclidean Distance)、余弦角度(Cosine Similarity)、点积(Dot Product)（考虑距离和角度的结合）
 
 > [!NOTE]
 > **评估指标**
@@ -70,17 +70,17 @@ RAG的流程
 
 ### 1.3 混合检索（Hybrid Search）
 关键词检索和语义检索的结合
-<center>
+<p align="center">
 <img src="pic/RAG/retriever_1.png" width="800">
 <br>混合检索
-</center>
+</p>
 
 ## 2. 向量数据库（Vector Database）
 ### 2.1 向量搜索（Vector Retrieval）
 
 
 ## 3. 重排序（Reranking）
-Retrivever检索速度快，一般能保证较高的召回率，但是准确率较低，将Retriever检索的Chunk再经过Reranking Model处理后，可以进一步排除不相关Chunk，提高精确率。
+Retriever检索速度快，一般能保证较高的召回率，但是准确率较低，将Retriever检索的Chunk再经过Reranking Model处理后，可以进一步排除不相关Chunk，提高精确率。
 
 
 
