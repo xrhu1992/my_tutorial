@@ -10,12 +10,12 @@
 * [x] [Markdown](Markdown.md)
   >[Markdown指南](https://www.markdown.xyz/)<br>
 
-* [ ] [LaTeX](LaTeX数学公式.md)
+* [x] [LaTeX](LaTeX数学公式.md)
   >[Markdown数学公式1](https://www.slzxf.cn/learn/5-markdown/CH02-markdown%E8%BF%9B%E9%98%B6/P27-Markdown%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F.html)<br>
   >[Markdown数学公式2](https://zhuanlan.zhihu.com/p/450465546)<br>
   >[Markdown数学公式3(最全)](https://www.cnblogs.com/1024th/p/11623258.html)
 
-* [ ] [Design Patterns](DesignPatterns.md)
+* [x] [Design Patterns](DesignPatterns.md)
   > [爱编程的大丙](https://subingwen.cn/design-patterns/#3-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F)
 
 * [ ] [Python](Python.md)
@@ -36,6 +36,10 @@
 
 * [ ] Probability Theory 
   > [Seeing Theory](http://seeing-theory.brown.edu/cn.html)
+
+## AI
+* [ ] [RAG (Retrieval-Augmented Generation)](RAG.md)
+  > [BiliBili GPT中英字幕 《检索增强生成|RAG》 吴恩达 coursera课程](https://www.bilibili.com/video/BV1Zg4dzTEdm?spm_id_from=333.788.videopod.episodes&vd_source=50f856c7eacb227ad5ea84420a6b423b&p=12)  
 
 ## Others
 * [ ] [Optics](Optics.md)

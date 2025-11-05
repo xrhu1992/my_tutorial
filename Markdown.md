@@ -11,6 +11,7 @@
 
 ## 扩展语法
   ![扩展语法](pic/markdown/扩展语法.png)
+  * 表格对齐 `| :---        |    :----:   |          ---: |`
 
 ## 兼容HTML语法
 * 文本居中 
@@ -23,6 +24,8 @@
 * 下划线 `<ins>text</ins>`
   <ins>text</ins>
 * 上标 `<sup>text</sup>`<sup>text</sup> 下标`<sub>text</sub>` <sub>text</sub>
+* 颜色 `<font color="red">This text is red!</font>` <font color="red">This text is red!</font>
+* 高亮 `I need to highlight these <mark>very important words</mark>.` I need to highlight these <mark>very important words</mark>.
 
 ## 警报
 ``` markdown
