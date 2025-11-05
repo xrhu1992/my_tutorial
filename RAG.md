@@ -20,7 +20,8 @@ RAG的流程
 > - 环境信息
 > - 其它 ... 
 
-> [!WARNING] 与Agent的区别
+> [!WARNING]
+> **与Agent的区别**  
 > Agent是使用LLM思考和推理（相当于大脑），再根据LLM思考的结果去调用相应的工具（相当于手脚）执行特定的任务。 
 
 ## 1. 检索器（Retriever）
@@ -37,7 +38,8 @@ RAG的流程
 * 使用Embedding模型把Chunk向量化后，存入Vector Database（存储了向量和对应的Chunk原文）
 * 相似度计算：欧式距离、余玄角度、点积（考虑距离和角度的结合）
 
-> [!NOTE] 评估指标
+> [!NOTE]
+> **评估指标**
 > - Accuracy 准确率（正确率）
 > ```math 
 > Accuracy=\frac{所有预测正确的样本}{总样本}=\frac{TP+TN}{TP+FN+FP+TN}
