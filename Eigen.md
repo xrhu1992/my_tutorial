@@ -1,4 +1,7 @@
-![Eigen](pic/Eigen/eigen_logo.png)
+<p align="left">
+<img src="pic/Eigen/eigen_logo.png" width="70">
+</p>
+
 # Eigen
 *Eigen是一个专注于线性代数、矩阵运算及数值算法的高层次C++开源库，核心功能涵盖固定/动态尺寸矩阵、稀疏矩阵操作、标准及自定义数值类型支持，并提供矩阵分解、几何特征求解等算法。该库仅依赖C++标准库，通过纯头文件实现跨平台兼容，支持CMake构建和模块化调用，广泛应用于计算机视觉、机器人、人工智能等领域。*<br>
 >[*Eigen官方文档*](https://libeigen.gitlab.io/eigen/docs-nightly/)
