@@ -5,9 +5,9 @@
 **RAG(Retrieval-Augmented Generation) 检索-增强生成**，是一种结合了信息检索技术与语言生成模型的人工智能技术。通过**从外部知识库中检索相关信息，并将其作为Prompt输入给LLMs，以增强模型处理知识密集型任务的能力**，如知识库、智能客服等。
 
 <p align="center">
-<img src="pic/RAG/RAG_flow.png" width = "700">
-<img src="pic/RAG/RAG_before_quiz.png" width = "700">
-<img src="pic/RAG/RAG_after_quiz.png" width = "700">
+<img src="pic/RAG/RAG_flow.png" width = "600">
+<img src="pic/RAG/RAG_before_quiz.png" width = "600">
+<img src="pic/RAG/RAG_after_quiz.png" width = "600">
 <br>
 RAG的流程
 </p>
@@ -23,7 +23,7 @@ RAG的流程
 > **与Agent的区别**  
 > Agent是使用LLM思考和推理（相当于大脑），再根据LLM思考的结果以及观测结果去多轮调用相应的工具（相当于手脚）执行特定的任务。例如下图是OpenManus的核心流程图   
 > <p align="center">
-> <img src="https://pic2.zhimg.com/v2-6c48a74911df20b50f8aec90c01f3565_1440w.jpg" width="600">
+> <img src="https://pic2.zhimg.com/v2-6c48a74911df20b50f8aec90c01f3565_1440w.jpg" width="550">
 > <br>OpenManus流程图
 > </p>
 
@@ -108,7 +108,6 @@ Retriever检索速度快，一般能保证较高的召回率，但是准确率�
 
 ### Cross-Encoding（交叉编码）
 交叉编码是一种通过同时考虑查询和候选Chunk之间的关系来评估其相关性的方法。与单独编码查询和Chunk不同，交叉编码将查询和Chunk作为输入的一部分，一起传递给模型，以捕捉它们之间的细微关系。这种方法通常使用双塔模型（Siamese Network）或Transformer架构来实现。
-
 
 ## 5. 常用工具（Tools）
 ### 5.1 向量数据库（Vector Database）
