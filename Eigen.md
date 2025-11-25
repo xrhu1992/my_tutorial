@@ -193,6 +193,16 @@
       q1.normaliize();
       // 转换为旋转矩阵
       Matrix3d m1 = q1.matrix();
+      // 四元数的逆(对于单位四元数其逆等于共轭四元数)
+      Quaterniond q_inverse = q1.inverse();
+      // 共轭四元数
+      Quaterniond q_conjugate = q1.conjugate();
+      // 使用四元数对三维向量旋转
+      Vector3d v1(x,y,z);
+      Vector3d v2 = q1 * v1;//数学上等效于q[0,v]q.inverse
+      v2 = q1._transformVector(v1);//显示转换，与上面等价
+      // 访问四元数的元素
+      Vector4d coeffs = q1.coeffs();//注意返回的顺序是[x, y, z, w] !!!
       ```
     - Euler角
       ```cxx
