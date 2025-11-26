@@ -1,96 +1,80 @@
-# Python
-## 注意事项
-* shell下输入`python3`或`py`进入python环境，`exit()`退出
-* python下标从0开始
-* 使用help()查看帮助
+# Python Tutorial
+> [Python官方教程](https://docs.python.org/zh-cn/3/tutorial/index.html)
+## 1. 如何使用
+### 1.1 进入python解释器环境
+* shell下输入`python3`或`py`进入python环境，`exit()`或`quit()`退出
+* 使用`help()`查看帮助
   ```python
   # 查看关于int的帮助，按q退出
   help(int)
   ```
-## 基础语法
-### 字符串
+### 1.2 脚本参数
+* 使用`sys.argv`获取脚本参数
+  ```python
+  import sys
+  print('Script name:', sys.argv[0])
+  for i in range(1, len(sys.argv)):
+      print('Argument {}: {}'.format(i, sys.argv[i]))
+  ```
+### 1.3 源文件字符编码
+* 在源文件开头添加`# -*- coding: utf-8 -*-`指定编码格式为utf-8
+---
+## 2. 基础语法
+### 2.1 基本运算
+* 基本运算符
 ```python
-# 使用单引号'string' 或双引号"string"括起来的文本被称为字符串
-'This is a string'
+17/3     # 除法，结果为浮点数 5.6666666666666
+17//3    # 整除，结果为整数 5
+17%3     # 取模，结果为1
+2**3     # 幂运算，结果为8
+```
+* 交互模式下，上次输出的表达式会赋给变量 _（当作计算器用时比较方便）
+```bash
+>>> 100+200
+300.0
+>>> _ * 1.5 # 上次结果乘以1.5
+450.0
+```
+* 一个简单的例子
+```python
+# 交换两个数的值
+a, b = 5, 10
+a, b = b, a
+# 使用print()输出结果
+print("a =", a, "b =", b,end=",")  # end参数指定结尾符
+print("a={}, b={}".format(a,b))  # 使用format格式化输出
+```
+### 2.2 字符串
+* 定义字符串
+```python
+# 使用单引号'string' 或双引号"string"(没有区别)括起来的文本被称为字符串
 "This is also a string"
 # 使用三引号'''string''' 或 """string"""括起来的文本被称为多行字符串
-'''This is a 
-multi-line string'''
-"""This is also a 
+"""This is a 
 multi-line string"""
-# 格式化输出
+```
+* 格式化输出 `format()`
+```python
 age = 20
 name = 'Bander'
 print('{0} is {1} years old.'.format(name, age))
 print(name + ' is ' + str(age) +' years old.')
+```
+* 转义字符
+```python
+# 常用转义字符
+\n  # 换行
+\t  # 制表符
+\\  # 反斜杠
+\'  # 单引号
+\"  # 双引号
 # 为避免转义字符干扰，可使用原始字面量
 R"Newlines are indicated by \n"
 ```
-*注意：字符串是不可变的*
-### 控制流
-* if-else
-  ```python
-  # if-else语句(注意':'不能缺少)
-  if a==b:
-      func1()
-  elif a<b:
-      func2()
-  else:
-      func3()
-  ```
-* while
-  ```python
-  # while语句(注意':'不能缺少)
-  while condition:
-      func1()
-  else:
-      func2()
-  ```
-* for
-  ```python
-  # for循环(注意':'不能缺少)
-  for i in rang(1,5):
-      func1()
-  else:
-      func2()
-  ```
-### 函数
-* 定义一个函数
-  ```python
-  # 定义一个函数
-  def func(a, b, c=0):
-      d=a+b+c
-      return d
-  # 使用函数
-  print(func(1,b=2))
-  ```
-* DocString
-  ```python
-  # 对函数功能的描述，使用.__doc__输出
-  def print_max(x, y):
-      '''
-      打印两个数值中的最大数。
-      这两个数都应该是整数
-      '''
-      # 如果可能，将其转换至整数类型
-      x = int(x)
-      y = int(y)
-      if x > y:
-          print(x, 'is maximum')
-      else:
-          print(y, 'is maximum')
-  # 显示函数注释内容
-  print(print_max.__doc__)
-  ```
-### 模块
-  ```python
-  # 导入一个模块(标准库模块)
-  import sys
-  # 导入模块中的某一功能
-  from math import sqrt
-  ```
-*包：包含一系列模块.py的文件夹*
-### 基本数据结构  
+> [!NOTE]
+> 1. *字符串是不可变的(Immutable)*
+
+### 2.3 基本数据结构  
 * List 列表  
   ```python
   # 用[]创建一个列表，可以是不同类型
@@ -102,11 +86,17 @@ R"Newlines are indicated by \n"
   fruits.append('pear')
   # 删除一个元素 100
   del fruits[2]
+  # 列表支持合并操作
+  fruits_and_veggies = fruits + ['tomato','potato']
+  # 列表切片操作（索引范围不包含末尾）
+  print(fruits[1:3])  # 输出索引1到2的元素
   ```
-  *注意：*
-  1. *使用[ ]初始化列表；*
-  2. *列表里的元素可以是不同类型的；*
-  3. *列表是可变的(Mutable)*
+  > [!NOTE]
+  > 1. *使用[ ]初始化列表；*
+  > 2. *列表里的元素可以是不同类型的；*
+  > 3. *列表是可变的(Mutable)*
+  > 4. *复制列表应使用切片操作，如`list_copy = list_original[:]`*
+
 * Tuple 元组
   ```python
   # 用()创建一个元组，可以是不同类型
@@ -161,12 +151,75 @@ R"Newlines are indicated by \n"
     seq_copy = seq # 引用同一对象，而非副本拷贝
     seq_copy = seq[:]  # 序列的副本拷贝
     ```
-## 面向对象
-### 类变量 & 对象变量
+### 2.4 控制流
+* if-else
+  ```python
+  # if-else语句(注意':'不能缺少)
+  if a==b:
+      func1()
+  elif a<b:
+      func2()
+  else:
+      func3()
+  ```
+* while
+  ```python
+  # while语句(注意':'不能缺少)
+  while condition:
+      func1()
+  else:
+      func2()
+  ```
+* for
+  ```python
+  # for循环(注意':'不能缺少)
+  for i in rang(1,5):
+      func1()
+  else:
+      func2()
+  ```
+### 2.5 函数
+* 定义一个函数
+  ```python
+  # 定义一个函数
+  def func(a, b, c=0):
+      d=a+b+c
+      return d
+  # 使用函数
+  print(func(1,b=2))
+  ```
+* DocString
+  ```python
+  # 对函数功能的描述，使用.__doc__输出
+  def print_max(x, y):
+      '''
+      打印两个数值中的最大数。
+      这两个数都应该是整数
+      '''
+      # 如果可能，将其转换至整数类型
+      x = int(x)
+      y = int(y)
+      if x > y:
+          print(x, 'is maximum')
+      else:
+          print(y, 'is maximum')
+  # 显示函数注释内容
+  print(print_max.__doc__)
+  ```
+### 2.6 模块
+  ```python
+  # 导入一个模块(标准库模块)
+  import sys
+  # 导入模块中的某一功能
+  from math import sqrt
+  ```
+*包：包含一系列模块.py的文件夹*
+## 3. 面向对象
+### 3.1 类变量 & 对象变量
 * 类变量：类的所有实例共享（类似C++的static），通过Class分配和引用（或`self.__class__.value`）
 * 对象变量：每个实例独有，通过self分配和引用
 
-## 类方法 & 静态方法
+### 3.2 类方法 & 静态方法
 * 类方法：使用`@classmethod`装饰器，第一个参数为cls，表示类本身
 * 静态方法：使用`@staticmethod`装饰器，无需传递类或实例参数
 ```python
@@ -184,10 +237,10 @@ class MyClass:
 MyClass.class_method()
 MyClass.static_method()
 ``` 
-### 继承
+### 3.3 继承
 * 支持单继承和多继承
 * 使用`super()`调用父类方法
-```pythonpython
+```python
 class Parent:
     def show(self):
         print("This is the Parent class.")
@@ -199,12 +252,8 @@ class Child(Parent):
 c = Child()
 c.show()
 ```
-### 魔术方法
 
 
 
 
 
-
-
-  
