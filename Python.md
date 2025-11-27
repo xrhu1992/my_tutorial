@@ -170,6 +170,18 @@ R"Newlines are indicated by \n"
   else:
       func2()
   ```
+* match case (Python 3.10+)
+  ```python
+  # match-case语句(注意':'不能缺少)
+  # 只有第一个被命中的case会被执行
+  match status:
+      case 100:
+          func1()
+      case 200 | 201:  # 多个值匹配
+          func2()
+      case _:  # _ 默认情况
+          func3()
+  ```
 * for
   ```python
   # for循环(注意':'不能缺少)
@@ -181,31 +193,44 @@ R"Newlines are indicated by \n"
 ### 2.5 函数
 * 定义一个函数
   ```python
-  # 定义一个函数
-  def func(a, b, c=0):
-      d=a+b+c
-      return d
-  # 使用函数
-  print(func(1,b=2))
-  ```
-* DocString
-  ```python
-  # 对函数功能的描述，使用.__doc__输出
-  def print_max(x, y):
+  def ask_ok(prompt, retries=4, reminder='Please try again!'):
+      # 对函数功能的描述，通过.__doc__输出
       '''
-      打印两个数值中的最大数。
-      这两个数都应该是整数
+      根据用户输入的'y'或'n'返回True或False
+      prompt: 提示信息
+      retries: 重试次数
+      reminder: 重试提示信息
       '''
-      # 如果可能，将其转换至整数类型
-      x = int(x)
-      y = int(y)
-      if x > y:
-          print(x, 'is maximum')
-      else:
-          print(y, 'is maximum')
+    while True:
+        reply = input(prompt)
+        if reply in {'y', 'ye', 'yes'}:
+            return True
+        if reply in {'n', 'no', 'nop', 'nope'}:
+            return False
+        retries = retries - 1
+        if retries < 0:
+            raise ValueError('invalid user response')
+        print(reminder)
+
   # 显示函数注释内容
   print(print_max.__doc__)
+  # 调用函数
+  is_ok=ask_ok('Do you really want to quit?')
   ```
+  * *name(元组) 和 **name(字典) 用于传递可变数量的参数*
+  ```python
+  def total(a=5, *numbers, **phonebook):
+      print('a', a)
+      # 遍历元组中的所有项目
+      for single_item in numbers:
+          print('single_item', single_item)
+      # 遍历字典中的所有项目
+      for first_part, second_part in phonebook.items():
+          print(first_part, second_part)
+  # 调用函数
+  total(10, 1, 2, 3, Jack=1123, John=2231, Inge=1560)
+  ```
+
 ### 2.6 模块
   ```python
   # 导入一个模块(标准库模块)
@@ -257,3 +282,29 @@ c.show()
 
 
 
+## 常用
+* `pass`站位符
+```python
+# 用于占位，什么都不做
+while True:
+    pass
+```
+* `range()`函数
+```python
+range(5) # 0到4
+range(2, 6)  # 2到5
+range(1, 10, 2)  # 1到9，步长为2
+list(range(5))  # [0, 1, 2, 3, 4]
+# 生成一个整数序列
+for i in range(1, 10, 2):  # 1到9，步长为2
+    print(i, end=' ')
+```
+* 列表推导式
+```python
+# 创建一个包含0到9的平方数的列表
+squares = [x**2 for x in range(10)]
+print(squares)
+# 创建一个包含偶数的列表
+evens = [x for x in range(10) if x % 2 == 0]
+print(evens)
+```
