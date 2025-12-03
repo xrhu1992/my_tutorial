@@ -1,5 +1,7 @@
 # Python Tutorial
 > [Python官方教程](https://docs.python.org/zh-cn/3/tutorial/index.html)
+> 
+> [Python内置函数列表](https://docs.python.org/zh-cn/3/library/functions.html)
 ## 1. 如何使用
 ### 1.1 进入python解释器环境
 * shell下输入`python3`或`py`进入python环境，`exit()`或`quit()`退出
@@ -73,96 +75,19 @@ print(name + ' is ' + str(age) +' years old.')
 # 为避免转义字符干扰，可使用原始字面量
 R"Newlines are indicated by \n"
 ```
-
-### 2.3 基本数据结构  
-* List 列表  
+### 2.3 比较
+* 比较运算符(返回布尔值True或False)
+  - `in` 和 `not in`用于执行确定一个值是否存在（或不存在）于某个容器中的成员检测
+  - `is` 和 `is not`用于比较两个对象是否是同一个对象
+  - 比较运算符优先级相同，且支持链式操作，如`a < b <= c`等同于`(a < b) and (b <= c)`
+* 布尔运算符
+  - 优先级顺序：`not`>`and`>`or`
+  - 短路求值：`and`和`or`会根据第一个操作数的值决定是否计算第二个操作数
   ```python
-  # 用[]创建一个列表，可以是不同类型
-  fruits = ['apple','mango',100,'banana']
-  # 使用for循环打印内容，空格结尾
-  for item in fruits
-      print(item, end=' ')
-  # 使用append向列表尾追加
-  fruits.append('pear')
-  # 删除一个元素 100
-  del fruits[2]
-  # 列表支持合并操作
-  fruits_and_veggies = fruits + ['tomato','potato']
-  # 列表切片操作（索引范围不包含末尾）
-  print(fruits[1:3])  # 输出索引1到2的元素
+  result_and = 1 and 2  # 第1个和第二个都为True，返回2
+  result_or = 1 or 2    # 第一个为True，返回1
   ```
-  ```python
-  # 列表常用方法 
-  list.append(6)    # 在列表末尾添加元素6，相当于list[len(list):]=[6]
-  list.insert(2, 7) # 在索引2处插入元素7
-  list.remove(1)    # 删除第一个值为1的元素
-  list.pop()        # 删除并返回最后一个元素
-  list.sort()       # 对列表进行排序
-  list.reverse()    # 反转列表顺序
-  index_of_5 = my_list.index(5)  # 获取值为5的元素的索引
-  count_of_1 = my_list.count(1)   # 计算值为1的元素个数
-  length = len(my_list)     # 获取列表长度
-  ```       
-  > [!NOTE]
-  > 1. *使用[ ]初始化列表；*
-  > 2. *列表里的元素可以是不同类型的；*
-  > 3. *列表是可变的(Mutable)*
-  > 4. *复制列表应使用切片操作，如`list_copy = list_original[:]`*
 
-* Tuple 元组
-  ```python
-  # 用()创建一个元组，可以是不同类型
-  zoo = ('python','elephant','penguin')
-  new_zoo = ('monkey','camel',zoo)
-  ```
-  > [!NOTE]
-  > 1. *使用( )初始化列表；*
-  > 2. *元组是不可变的(Immutable)*
-* Dictionary 字典
-  ```python
-  # “ab”是地址（ Address） 簿（ Book） 的缩写
-  ab = {
-  'Swaroop': 'swaroop@swaroopch.com',
-  'Larry': 'larry@wall.org',
-  'Matsumoto': 'matz@ruby-lang.org',
-  'Spammer': 'spammer@hotmail.com'} 
-  print("Swaroop's address is", ab['Swaroop'])
-
-  # 删除一对键值—值配对
-  del ab['Spammer']
-  print('\nThere are {} contacts in the address-book\n'.format(len(ab)))
-  for name, address in ab.items():
-  print('Contact {} at {}'.format(name, address))
-
-  # 添加一对键值—值配对
-  ab['Guido'] = 'guido@python.org'
-  if 'Guido' in ab:
-  print("\nGuido's address is", ab['Guido'])
-  ```
-  > [!NOTE]
-  > 1. *使用{ }初始化列表；*
-  > 2. *键(key)是不可变的，值(value)是可变的*
-* Sequence 序列 & Set 集合
-  - Sequence: 包含List和Tuple，支持索引和切片操作
-  - Set: 无序不重复元素集合，支持数学集合操作（并集、交集、差集等）
-  - 常用操作
-    ```python
-    # 序列操作
-    seq = [1, 2, 3, 4, 5]
-    print(seq[0])      # 索引访问
-    print(seq[1:4])    # 切片访问
-
-    # 集合操作
-    set1 = {1, 2, 3}
-    set2 = {3, 4, 5}
-    print(set1 | set2)  # 并集
-    print(set1 & set2)  # 交集
-    print(set1 - set2)  # 差集
-
-    # 序列的拷贝
-    seq_copy = seq # 引用同一对象，而非副本拷贝
-    seq_copy = seq[:]  # 序列的副本拷贝
-    ```
 ### 2.4 控制流
 * if-else
   ```python
@@ -202,7 +127,141 @@ R"Newlines are indicated by \n"
   else:
       func2()
   ```
-### 2.5 函数
+  
+## 3. 数据结构
+### 3.1 List 列表  
+* 简单的例子
+  ```python
+  # 用[]创建一个列表，可以是不同类型
+  fruits = ['apple','mango',100,'banana']
+  # 使用for循环打印内容，空格结尾
+  for item in fruits
+      print(item, end=' ')
+  # 使用append向列表尾追加
+  fruits.append('pear')
+  # 删除一个元素 100
+  del fruits[2]
+  # 列表支持合并操作
+  fruits_and_veggies = fruits + ['tomato','potato']
+  # 列表切片操作（索引范围不包含末尾）
+  print(fruits[1:3])  # 输出索引1到2的元素
+  ```
+* 列表常用方法
+  ```python
+  # 列表常用方法 
+  list.append(6)    # 在列表末尾添加元素6，等同于list[len(list):]=[6]
+  list.extend([7,8]) # 在列表末尾添加多个元素7和8，等同于list[len(list):]=[7,8]
+  list.insert(2, 7) # 在索引2处插入元素7
+  list.remove(1)    # 删除第一个值为1的元素
+  list.pop()        # 删除并返回最后一个元素
+  list.sort()       # 对列表进行排序
+  list.reverse()    # 反转列表顺序
+  index_of_5 = list.index(5)  # 获取值为5的元素的索引
+  count_of_1 =list.count(1)   # 计算值为1的元素个数
+  list.clear()      # 清空列表，等同于list[:] = []或del list[:]
+  list.copy()       # 返回列表的浅拷贝，等同于list[:]
+  ```
+* 列表推导式
+  ```python
+  # 创建一个包含0到9的平方数的列表
+  squares = [x**2 for x in range(10)]
+  # 创建一个包含偶数的列表
+  evens = [x for x in range(10) if x % 2 == 0]
+  # 嵌套列表推导式，生成一个3x4的矩阵
+  matrix = [
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12]
+  ]
+  # 转置矩阵，注意嵌套的for循环顺序
+  matrix = [[row[i] for row in matrix] for i in range(4)]
+  # 等同于
+  transposed = []
+  for i in range(4):
+    transposed.append([row[i] for row in matrix])
+  ``` 
+* `del`语句删除列表元素
+  ```python
+  # 删除列表中的元素
+  a = ['apple', 'banana', 'cherry', 'date']
+  del a[1]        # 删除索引1处的元素 'banana'
+  del a[1:3]     # 删除索引1到2的元素 'cherry' 和 'date'
+  del a[:]       # 删除列表中的所有元素
+  del a          # 删除整个列表变量
+  ```
+> [!NOTE]
+> 1. *使用[ ]初始化列表；*
+> 2. *列表里的元素可以是不同类型的；*
+> 3. *列表是可变的(Mutable)*
+> 4. *复制列表应使用切片操作，如`list_copy = list_original[:]`*
+
+### 3.2 Tuple 元组
+* Tuple 元组: <mark>**不可变的(Immutable)**</mark>
+  ```python
+  # 用()创建一个元组，可以是不同类型
+  zoo = ('python','elephant','penguin') # 也可以不要括号
+  new_zoo = ('monkey','camel',zoo)
+  single_animal = ('only one',)  # 创建只有一个元素的元组，逗号不能省略
+  ```
+
+### 3.3 Set 集合 & Dictionary 字典
+* **Set 集合**: <mark>**无序不重复**</mark>元素集合，支持数学集合操作（并集、交集、差集等）
+  ```python
+  # 创建一个集合(集合没有顺序概率，因此不能使用切片或索引)
+  basket = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'} # 重复元素会被自动去除
+  'oringe' in basket  # 检查元素是否在集合中，结果为True
+  print(basket)  # 无序输出集合内容，重复元素只出现一次
+  # 集合操作
+  set1 = {1, 2, 3}
+  set2 = {3, 4, 5}
+  print(set1 | set2)  # 并集
+  print(set1 & set2)  # 交集
+  print(set1 - set2)  # 差集
+  print(set1 ^ set2)  # 去除and b的交集后的并集
+  ```
+
+* Dictionary 字典: <mark>**键-值(key-value)对的无序集合**</mark>
+  ```python
+  # 创建一个字典
+  ab = {
+  'Swaroop': 'swaroop@swaroopch.com',
+  'Larry': 'larry@wall.org',
+  'Matsumoto': 'matz@ruby-lang.org',
+  'Spammer': 'spammer@hotmail.com'} 
+  print("Swaroop's address is", ab['Swaroop'])
+  dic = dict(sape=4139, guido=4127, jack=4098) # 使用dict()创建字典
+
+  # 删除一对键值—值配对
+  del ab['Spammer']
+  print('\nThere are {} contacts in the address-book\n'.format(len(ab)))
+  for name, address in ab.items():
+  print('Contact {} at {}'.format(name, address))
+
+  # 添加一对键值—值配对
+  ab['Guido'] = 'guido@python.org'
+  if 'Guido' in ab:
+  print("\nGuido's address is", ab['Guido'])
+
+  # 字典常用方法
+  list(ab.keys())    # 返回所有键的列表
+  list(ab.values())  # 返回所有值的列表
+  list(ab.items())   # 返回所有键-值对的列表
+  ab.clear()        # 清空字典
+  ab.copy()         # 返回字典的浅拷贝
+
+  # 字典遍历
+  for key in ab:
+    print(key, '=>', ab[key])
+  # 另一种遍历方式
+  for key, value in ab.items():
+    print(key, '=>', value)
+
+  ```
+  > [!NOTE]
+  > *键(key)是不可变的，值(value)是可变的*
+
+## 4. 函数与模块
+### 4.1 函数
 * 定义一个函数
   ```python
   def ask_ok(prompt, retries=4, reminder='Please try again!'):
@@ -243,7 +302,7 @@ R"Newlines are indicated by \n"
   total(10, 1, 2, 3, Jack=1123, John=2231, Inge=1560)
   ```
 
-### 2.6 模块
+### 4.2 模块
   ```python
   # 导入一个模块(标准库模块)
   import sys
@@ -251,12 +310,13 @@ R"Newlines are indicated by \n"
   from math import sqrt
   ```
 *包：包含一系列模块.py的文件夹*
-## 3. 面向对象
-### 3.1 类变量 & 对象变量
+
+## 5. 面向对象
+### 5.1 类变量 & 对象变量
 * 类变量：类的所有实例共享（类似C++的static），通过Class分配和引用（或`self.__class__.value`）
 * 对象变量：每个实例独有，通过self分配和引用
 
-### 3.2 类方法 & 静态方法
+### 5.2 类方法 & 静态方法
 * 类方法：使用`@classmethod`装饰器，第一个参数为cls，表示类本身
 * 静态方法：使用`@staticmethod`装饰器，无需传递类或实例参数
 ```python
@@ -291,10 +351,7 @@ c.show()
 ```
 
 
-
-
-
-## 常用
+## 6. 常用
 * `pass`站位符
 ```python
 # 用于占位，什么都不做
@@ -311,12 +368,4 @@ list(range(5))  # [0, 1, 2, 3, 4]
 for i in range(1, 10, 2):  # 1到9，步长为2
     print(i, end=' ')
 ```
-* 列表推导式
-```python
-# 创建一个包含0到9的平方数的列表
-squares = [x**2 for x in range(10)]
-print(squares)
-# 创建一个包含偶数的列表
-evens = [x for x in range(10) if x % 2 == 0]
-print(evens)
-```
+
