@@ -45,6 +45,8 @@ print("a =", a, "b =", b,end=",")  # end参数指定结尾符
 print("a={}, b={}".format(a,b))  # 使用format格式化输出
 ```
 ### 2.2 字符串
+> [!NOTE]
+> 1. *字符串是不可变的(Immutable)*
 * 定义字符串
 ```python
 # 使用单引号'string' 或双引号"string"(没有区别)括起来的文本被称为字符串
@@ -71,8 +73,6 @@ print(name + ' is ' + str(age) +' years old.')
 # 为避免转义字符干扰，可使用原始字面量
 R"Newlines are indicated by \n"
 ```
-> [!NOTE]
-> 1. *字符串是不可变的(Immutable)*
 
 ### 2.3 基本数据结构  
 * List 列表  
@@ -91,6 +91,18 @@ R"Newlines are indicated by \n"
   # 列表切片操作（索引范围不包含末尾）
   print(fruits[1:3])  # 输出索引1到2的元素
   ```
+  ```python
+  # 列表常用方法 
+  list.append(6)    # 在列表末尾添加元素6，相当于list[len(list):]=[6]
+  list.insert(2, 7) # 在索引2处插入元素7
+  list.remove(1)    # 删除第一个值为1的元素
+  list.pop()        # 删除并返回最后一个元素
+  list.sort()       # 对列表进行排序
+  list.reverse()    # 反转列表顺序
+  index_of_5 = my_list.index(5)  # 获取值为5的元素的索引
+  count_of_1 = my_list.count(1)   # 计算值为1的元素个数
+  length = len(my_list)     # 获取列表长度
+  ```       
   > [!NOTE]
   > 1. *使用[ ]初始化列表；*
   > 2. *列表里的元素可以是不同类型的；*
@@ -103,9 +115,9 @@ R"Newlines are indicated by \n"
   zoo = ('python','elephant','penguin')
   new_zoo = ('monkey','camel',zoo)
   ```
-  *注意：*
-  1. *使用( )初始化列表；*
-  2. *元组是不可变的(Immutable)*
+  > [!NOTE]
+  > 1. *使用( )初始化列表；*
+  > 2. *元组是不可变的(Immutable)*
 * Dictionary 字典
   ```python
   # “ab”是地址（ Address） 簿（ Book） 的缩写
@@ -127,9 +139,9 @@ R"Newlines are indicated by \n"
   if 'Guido' in ab:
   print("\nGuido's address is", ab['Guido'])
   ```
-  *注意：*
-  1. *使用{ }初始化列表；*
-  2. *键(key)是不可变的，值(value)是可变的*
+  > [!NOTE]
+  > 1. *使用{ }初始化列表；*
+  > 2. *键(key)是不可变的，值(value)是可变的*
 * Sequence 序列 & Set 集合
   - Sequence: 包含List和Tuple，支持索引和切片操作
   - Set: 无序不重复元素集合，支持数学集合操作（并集、交集、差集等）
