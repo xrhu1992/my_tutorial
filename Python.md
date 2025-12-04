@@ -61,8 +61,9 @@ multi-line string"""
 ```python
 age = 20
 name = 'Bander'
-print('{0} is {1} years old.'.format(name, age))
-print(name + ' is ' + str(age) +' years old.')
+print(f'{name} is {age} years old.') # 使用格式化字符串字面值(f-string)
+print('{0} is {1} years old.'.format(name, age)) # 使用位置参数
+print(name + ' is ' + str(age) +' years old.') # 使用字符串拼接
 ```
 * 转义字符
 ```python
@@ -127,7 +128,30 @@ R"Newlines are indicated by \n"
   else:
       func2()
   ```
-  
+### 2.5 文件读写
+* 打开文件
+  ```python
+  # 使用open()函数打开文件，返回文件对象
+  file = open('example.txt', 'r')  # 'r'-只读模式，'w'-写入模式，'a'-追加模式
+  # 读取整个文件内容
+  content = file.read()
+  print(content)
+  file.close() # 关闭文件释放资源
+  ```
+  ```python
+  # 逐行读取文件内容（句子结束后自动关闭文件）
+  with open('example.txt', 'r') as file:
+      for line in file:
+          print(line, end='')  # end=''避免重复换行
+  ```
+* 写入文件内容
+  ```python
+  # 写入内容到文件
+  with open('output.txt', 'w') as file:  # 'w'表示写入模式
+      file.write('Hello, World!\n')
+      file.write('This is a test file.\n')
+  ```
+
 ## 3. 数据结构
 ### 3.1 List 列表  
 * 简单的例子
@@ -303,13 +327,81 @@ R"Newlines are indicated by \n"
   ```
 
 ### 4.2 模块
+* 模块(module): 一个包含Python定义和语句的文件，文件名以.py结尾，模块名即文件名去掉.py
   ```python
-  # 导入一个模块(标准库模块)
-  import sys
-  # 导入模块中的某一功能
-  from math import sqrt
+  # 编写一个模块 mymodule.py
+  def greet(name):
+      print("Hello, " + name + "!")
   ```
-*包：包含一系列模块.py的文件夹*
+
+* 导入模块
+  ```python
+  # 1. 导入整个模块
+  import mymodule
+  mymodule.greet("Alice")  # 输出: Hello, Alice!
+  # 模块名
+  print(mymodule.__name__)  # 输出: mymodule
+  # 2. 使用from-import语句导入模块中的特定函数
+  from mymodule import greet
+  greet("Bob")  # 输出: Hello, Bob!
+  # 3. 使用as关键字为模块或函数指定别名
+  import mymodule as mm
+  mm.greet("Charlie")  # 输出: Hello, Charlie!
+  from mymodule import greet as greeting
+  greeting("David")  # 输出: Hello, David!
+  ```
+
+* 标准模块库
+  ```python
+  # 修改sys.path以包含自定义模块路径
+  import sys
+  sys.path.append('/path/to/your/module_directory')
+  # 导入自定义模块
+  import mymodule
+  mymodule.greet("Eve")  # 输出: Hello, Eve!
+  ```
+
+* `dir()`函数列出模块中的所有属性和方法
+  ```python
+  import math
+  print(dir(math))  # 输出math模块中的所有属性和方法
+  ```
+* 包：包含一系列模块.py的文件夹，文件夹内必须包含一个`__init__.py`文件（可以为空），例如
+  ```
+  sound/                          最高层级的包
+        __init__.py               初始化 sound 包
+        formats/                  用于文件格式转换的子包
+                __init__.py
+                wavread.py
+                wavwrite.py
+                aiffread.py
+                aiffwrite.py
+                auread.py
+                auwrite.py
+                ...
+        effects/                  用于音效的子包
+                __init__.py
+                echo.py
+                surround.py
+                reverse.py
+                ...
+  ```
+  ```python
+  # 导入单个模块
+  from sound.effects import echo # 导入echo模块
+  echo.echofilter(input, output, delay=0.7, atten=4) # 使用echo模块中的echofilter函数
+  # 或者
+  import sound.effects.echo      
+  sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+  # 导入多个模块
+  from sound.effects import echo, surround
+  ```
+  ```python
+  # 相对导入
+  from . import echo             # 导入当前包中的echo模块
+  from .. import formats         # 导入上级包中的formats模块
+  from ..formats import wavread  # 从上级包的formats模块中导入wavread模块
+  ```
 
 ## 5. 面向对象
 ### 5.1 类变量 & 对象变量

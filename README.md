@@ -17,14 +17,18 @@
   >[Markdown数学公式2](https://zhuanlan.zhihu.com/p/450465546)<br>
   >[Markdown数学公式3(最全)](https://www.cnblogs.com/1024th/p/11623258.html)
 
-* [ ] [Python](Python.md)
+* [x] [Python](Python.md)
   > [Python简明教程](https://github.com/LenKiMo/byte-of-python)
+  >
+  > [Python官方教程](https://docs.python.org/zh-cn/3/tutorial/index.html)
 
 * [ ] [C++11](C++11.md)
 
 ## Library
 * [x] [Eigen](Eigen.md)
   > [Eigen3中文教程](https://www.windtunnel.cn/eigen3tutorial/)
+* [ ] [NumPy](NumPy.ipynb)
+  > [NumPy官方文档中文版](https://numpy.net.cn/doc/stable/index.html)
 
 ## Math
 * [ ] [Linear Algebra](LinearAlgebra.md)
@@ -37,8 +41,9 @@
   > [Seeing Theory](http://seeing-theory.brown.edu/cn.html)
 
 ## AI
-* [ ] [RAG (Retrieval-Augmented Generation)](RAG.md)
+* [x] [RAG (Retrieval-Augmented Generation)](RAG.md)
   > [BiliBili GPT中英字幕 《检索增强生成|RAG》 吴恩达 coursera课程](https://www.bilibili.com/video/BV1Zg4dzTEdm?spm_id_from=333.788.videopod.episodes&vd_source=50f856c7eacb227ad5ea84420a6b423b&p=12)  
+* [ ] [LLM (Large Language Model)](LLM.md)
 
 ## Others
 * [ ] [Optics](Optics.md)
