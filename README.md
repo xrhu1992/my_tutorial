@@ -2,7 +2,7 @@
 
 ## Coding
 * [x] [WSL](WSL.md)
-* [x] [Linux简介](Linux.md) & [常用指令大全](Linux常用指令.md)
+* [x] [Linux](Linux.md)
 * [ ] [Git](Git.md)
 * [x] [CMake](CMake.md)
 * [x] [Design Patterns](DesignPatterns.md)
@@ -18,8 +18,6 @@
   >[Markdown数学公式3(最全)](https://www.cnblogs.com/1024th/p/11623258.html)
 
 * [x] [Python](Python.md)
-  > [Python简明教程](https://github.com/LenKiMo/byte-of-python)
-  >
   > [Python官方教程](https://docs.python.org/zh-cn/3/tutorial/index.html)
 
 * [ ] [C++11](C++11.md)
