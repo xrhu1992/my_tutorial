@@ -27,7 +27,7 @@
 ## Library
 * [x] [Eigen](Eigen.md)
   > [Eigen3中文教程](https://www.windtunnel.cn/eigen3tutorial/)
-* [ ] [NumPy](NumPy.ipynb)
+* [x] [NumPy](NumPy.ipynb)
   > [NumPy官方文档中文版](https://numpy.net.cn/doc/stable/index.html)
 
 ## Math
