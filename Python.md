@@ -450,7 +450,7 @@ c.show()
 while True:
     pass
 ```
-* `range()`函数
+* `range()` 生成整数序列
 ```python
 range(5) # 0到4
 range(2, 6)  # 2到5
@@ -460,4 +460,20 @@ list(range(5))  # [0, 1, 2, 3, 4]
 for i in range(1, 10, 2):  # 1到9，步长为2
     print(i, end=' ')
 ```
+* `zip()` 打包
+```python
+# 将多个可迭代对象打包成元组列表
+names = ['Alice', 'Bob', 'Charlie']
+ages = [25, 30, 35]
+for name, age in zip(names, ages):
+    print(f'{name} is {age} years old.')
+```
+* `shuffle()` 随机打乱顺序
+```python
+import random
+items = [1, 2, 3, 4, 5]
+random.shuffle(items)
+print(items)  # 输出打乱顺序后的列表
+```
+
 
