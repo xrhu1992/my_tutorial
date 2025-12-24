@@ -1,4 +1,8 @@
 # Deep Learning
+> [Neural Network and Deep Learning-ch](doc/Neural%20Network%20and%20Deep%20Learning-ch.pdf)
+>
+> [PaddlePaddle 教程](https://www.paddlepaddle.org.cn/tutorials/projectdetail/5604804)
+
 ## 1. 基础概念
 ### 1.1 激活函数 (Activation Function)
 激活函数是神经网络中的关键组件，决定了神经元的输出。
@@ -7,18 +11,24 @@
   - 原则：连续可导，且计算简单，这样便于反向传播算法的实现。
 * 常见类型  
   常用的激活函数包括ReLU、Sigmoid和Tanh。ReLU在隐藏层中表现良好，而Sigmoid和Tanh适用于输出层。
-  - ReLU：输出为输入的最大值，即`max(0, x)`。简单且计算效率高，但是在输入为负数时会导致“死亡ReLU”问题（即梯度为0，无法更新权重）。
-  ```math
-  \text{ReLU}(x) = \max(0, x)
-  ```
-  - Sigmoid：将输入映射到(0, 1)区间，常用作二分类问题的输出层激活函数。但是在深层网络中，由于梯度消失问题，Sigmoid函数在反向传播时的效果不是很好。
+  - Sigmoid：将输入映射到(0, 1)区间，常用作二分类问题的输出层激活函数。但是在深层网络中，由于**梯度消失**问题，Sigmoid函数在反向传播时的效果不是很好。
   ```math
   \text{Sigmoid}(x) = \frac{1}{1 + e^{-x}}
+  ```
+  - ReLU：输出为输入的最大值，即`max(0, x)`。简单且计算效率高，解决了梯度消失问题，但是在输入为负数时会导致“死亡ReLU”问题（即梯度为0，无法更新权重）。
+  ```math
+  \text{ReLU}(x) = \max(0, x)
   ```
   - Tanh：将输入映射到(-1, 1)区间，与Sigmoid函数类似，但是输出的均值为0，这在某些情况下更方便。
   ```math
   \text{Tanh}(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
   ```
+  <p align="center">
+  <img src="https://ai-studio-static-online.cdn.bcebos.com/56c693f93293460498f0b37a7472ee037c7224c4bcb4435c8bf0450ce7abc6cc" height="180">
+  <img src="https://ai-studio-static-online.cdn.bcebos.com/56c693f93293460498f0b37a7472ee037c7224c4bcb4435c8bf0450ce7abc6cc" height="180">
+  <img src="https://ai-studio-static-online.cdn.bcebos.com/05510f67623b4dfb83460e30ed4084fac10d2759f3084fd0a57b1394ad4f09e8" height="180">
+  <br>Sigmoid / ReLU / Tanh<br>
+  </p>
 ### 1.2 损失函数 (Loss Function)
 有时也被称为代价函数或目标函数。损失函数用于衡量模型预测值与真实值之间的差距，是训练过程中优化的目标。
 * 常见损失函数 
