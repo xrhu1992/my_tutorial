@@ -42,9 +42,11 @@
 * [ ] [Deep Learning](DeepLearning.md)
   > [神经网络与深度学习](doc/Neural%20Network%20and%20Deep%20Learning-ch.pdf) <br>
 * [ ] [LLM (Large Language Model)](LLM.md)
+* [ ] [Speech Recognition](SpeechRecognition.md)
 * [x] [RAG (Retrieval-Augmented Generation)](RAG.md)
   > [BiliBili GPT中英字幕 《检索增强生成|RAG》 吴恩达 coursera课程](https://www.bilibili.com/video/BV1Zg4dzTEdm?spm_id_from=333.788.videopod.episodes&vd_source=50f856c7eacb227ad5ea84420a6b423b&p=12)  
 
 
 ## Others
 * [ ] [Optics](Optics.md)
+

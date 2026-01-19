@@ -20,6 +20,11 @@ Pipeline: VAD-KWS-ASR
 ### 4.2 模型(Model)
 * RNN-T
 
-## 4.4 部署(Deployment)
+## 4.3 部署(Deployment)
 * NCNN
 * Paddle Lite
+
+## 4.4 工具(Tools)
+* audio-preview: VS Code插件，图形化展示音频文件的波形图和频谱图
+* CoolEdit Pro: 音频编辑软件
+* Praat: 语音分析软件，适合语音标注
