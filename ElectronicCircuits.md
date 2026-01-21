@@ -34,8 +34,8 @@
 ## 3. 电子元件特性
 ### 3.1 二极管（Diode）
 <p align="center">
-<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7GstFnquGvSxcVTsBYoyfZVQMyxP3ZInQnNLJk4hl4oQHCfp3EzZ3KQ/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=0" width="400">
-<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7ONTU0xJvBo7C01mianQHjC7GXn2k1tPSvrSLcIs1HKOxuib9OGFHAopQ/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=1" width="400">
-<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7IbIADN9CXuvGU3eLMOVgObjIpXqQBBFn1AOoaQEmtb3WGXcnzyCUkA/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=2" width="400">
-<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7Lu0e7BoHBIOeVgkQ9icJiasGg1JyKPwVDkqWCNIP56662G5waK3r0Eww/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=3" width="400">
+<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7GstFnquGvSxcVTsBYoyfZVQMyxP3ZInQnNLJk4hl4oQHCfp3EzZ3KQ/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=0" width="350">
+<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7ONTU0xJvBo7C01mianQHjC7GXn2k1tPSvrSLcIs1HKOxuib9OGFHAopQ/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=1" width="350">
+<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7IbIADN9CXuvGU3eLMOVgObjIpXqQBBFn1AOoaQEmtb3WGXcnzyCUkA/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=2" width="350">
+<img src="https://mmecoa.qpic.cn/sz_mmecoa_jpg/BZOp25QIs9Q2G0MyllPyEE3B3OX7hTo7Lu0e7BoHBIOeVgkQ9icJiasGg1JyKPwVDkqWCNIP56662G5waK3r0Eww/640?wx_fmt=jpeg&from=appmsg&watermark=1&tp=wxpic&wxfrom=10005&wx_lazy=1#imgIndex=3" width="350">
 </p>

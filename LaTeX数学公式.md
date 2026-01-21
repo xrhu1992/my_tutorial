@@ -71,11 +71,12 @@
   - 微分 `\frac{\partial x}{\partial y}` $\frac{\partial x}{\partial y}$
 
 ## **数学结构**
-![数学结构](pic/markdown/math_constructs.png)
+![数学结构](pic/markdown/math_constructs.png)<br>
 $\frac{abc}{xyz}$  
+
 $\overrightarrow{v}$
 ## **定界符**
-![定界符](pic/markdown/delimiters.png)
+![定界符](pic/markdown/delimiters.png)<br>
 *注：将定界符与\left和、right组合使用可以自动匹配内容高度，适合矩阵形式的书写*<br>
 $[$ $x$ $y$ $z$ $]$
 ## **矩阵**  
