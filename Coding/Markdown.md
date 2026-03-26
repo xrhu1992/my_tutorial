@@ -7,11 +7,12 @@
 > 不同平台下markdown的部分语法可能不兼容
 > 
 ## 基本语法
-  ![基本语法](pic/markdown/基本语法.png)
+  <p align="center"><img src="../pic/markdown/基本语法.png" width = "700"></p>
 
 ## 扩展语法
-  ![扩展语法](pic/markdown/扩展语法.png)
-  * 表格对齐 `| :---        |    :----:   |          ---: |`
+  <p align="center"><img src="../pic/markdown/扩展语法.png" width = "700"></p>
+  
+  - 表格对齐 `| :---        |    :----:   |          ---: |`
 
 ## 兼容HTML语法
 * 文本居中 
@@ -26,6 +27,9 @@
 * 上标 `<sup>text</sup>`<sup>text</sup> 下标`<sub>text</sub>` <sub>text</sub>
 * 颜色 `<font color="red">This text is red!</font>` <font color="red">This text is red!</font>
 * 高亮 `I need to highlight these <mark>very important words</mark>.` I need to highlight these <mark>very important words</mark>.
+* 插入视频 `<video src="movie.mp4" controls></video>` 
+  <br>
+  <video src="https://vdn3.vzuu.com/SD/d7aed48e-2356-11eb-ab14-ea448c1a0027.mp4?auth_key=1774497142-0-0-1fb181d0ed3220325ca599f490289f84&bu=078babd7&c=avc.0.0&disable_local_cache=1&expiration=1774497142&f=mp4&pu=078babd7&v=tx" controls></video>
 
 ## 警报
 ``` markdown
