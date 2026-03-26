@@ -105,12 +105,12 @@
 #### 3.2.1 原理
 - **光的极化**:光有极化方向，使用偏振镜片可以筛选出任意特定极化方向的光。从数学角度可以将某极化方向看成为两个互相垂直的分量的合成，两个同相位的分量（红色和蓝色）合成线偏振光，如下示意图：
   <p align="center">
-  <video src="https://xrhu-store.oss-cn-shanghai.aliyuncs.com/obsidian/Note/Physics/Quarter-wave-Plate_1.mp4?x-oss-credential=TMP.3KzTe66ph3RYhvMsWAE1WTHAdLrE8aCoZRoFSoJFbmJYnYR4pELRkukHJZKL1uE3dfjWTr1z1A4DTFrjWb6RZjLvQGub8L%2F20260326%2Fcn-shanghai%2Foss%2Faliyun_v4_request&x-oss-date=20260326T053951Z&x-oss-expires=3600&x-oss-signature-version=OSS4-HMAC-SHA256&x-oss-signature=f532d7d37d11ee65bc8419f5280874ebd6a345ecc402119bd283ff284603013f" heigth = "450" loop controls></video><br>
+  <video src="Quarter-wave-Plate_1.mp4" heigth = "450" loop controls></video><br>
   两个同相位的分量（红色和蓝色）合成线偏振光
   </p> 
 - 有一类各向异性材料（单轴双折射晶体），对于不同偏振方向的入射光，会有不同的折射率（也就是有不同的传播速度，快轴和慢轴）。而1/4波片就是控制材料和厚度使光经过波片后，两个不同偏振方向的光产生1/4波长的相位差，在此相位差下合成的光为圆偏振光，如下示意图：
   <p align="center">
-  <video src="https://xrhu-store.oss-cn-shanghai.aliyuncs.com/obsidian/Note/Physics/Quarter-wave-Plate_2.mp4?x-oss-credential=TMP.3KzTe66ph3RYhvMsWAE1WTHAdLrE8aCoZRoFSoJFbmJYnYR4pELRkukHJZKL1uE3dfjWTr1z1A4DTFrjWb6RZjLvQGub8L%2F20260326%2Fcn-shanghai%2Foss%2Faliyun_v4_request&x-oss-date=20260326T054022Z&x-oss-expires=3600&x-oss-signature-version=OSS4-HMAC-SHA256&x-oss-signature=a943f92c26de2f725d4d21fb5477add984ece461fd8fe62da8d45eba052d4698" heigth = "450" loop controls></video><br>
+  <video src="Quarter-wave-Plate_2.mp4" heigth = "450" loop controls></video><br>
   红色分量相位延迟1/4波长后与蓝色分量合成圆偏振光
   </p> 
 - 总结：四分之一波片能够**将线偏振光转换为圆偏振光，或将圆偏振光转换为线偏振光**。它的工作原理是利用双折射效应，使入射光的两个正交分量之间产生90度的相位差。
