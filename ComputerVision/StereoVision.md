@@ -1,6 +1,6 @@
-# 立体视觉
+# 立体视觉（Stereo Vision）
 
-### 1. 单目散斑结构光
+## 1. 单目散斑结构光（Single-View Structured Light）
 ### 1.1 原理
 <p align="center">
 <img src="https://developer-orbbec-oss.oss-cn-shenzhen.aliyuncs.com/images/c35783fb-17e3-45fe-aec4-5c1d8ef269cd.png" height = "450">
@@ -37,3 +37,14 @@
   <br>
   图1.3.1 单目散斑结构光标定的一种方法
   </p>
+
+## 2. 双目立体视觉（Binocular Stereo Vision）
+### 2.1 点-线-面的性质（Point-Line-Face Properties）
+#### 2.1.1 平面表示
+- **平面点：** $\overrightarrow{x}=(x,y)^T$ ，齐次表示： $\overrightarrow{x}=(x,y,1)^T$
+- **平面线：** $ax+by+c=0$，向量表示：$\overrightarrow{l}=(a,b,c)^T$，其中$\overrightarrow{n}=(a,b)$$为线的法向量
+
+#### 2.1.2 空间表示
+- **空间点：** $\overrightarrow{X}=(X,Y,Z)^T$，齐次表示： $\overrightarrow{X}=(X,Y,Z,1)^T$
+- **空间线：** $\overrightarrow{L}=(\overrightarrow{P},\overrightarrow{V})$，其中$\overrightarrow{P}$为线上的一个点，$\overrightarrow{V}$为线的方向向量
+- **空间面：** $aX+bY+cZ+d=0$，向量表示：$\overrightarrow{S}=(a,b,c,d)^T$，其中$\overrightarrow{n}=(a,b,c)$为面的法向量

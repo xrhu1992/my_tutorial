@@ -41,7 +41,7 @@
   - **分组**：用花括号将多个字符组合<br>
     `x_{i+1}`  显示为：$x_{i+1}$
 ## **希腊字母**
-![希腊字母](pic/markdown/greek_letters.png)
+![希腊字母](../pic/markdown/greek_letters.png)
 
 ## **运算符**
 * **四则运算**
