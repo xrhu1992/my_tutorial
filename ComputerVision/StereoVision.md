@@ -78,10 +78,10 @@
 </p>
 
 - **代数推导：**
-  - STEP1：空间点$X$在第一、第二幅视图中的像分别为$\overrightarrow{x}$和$\overrightarrow{x}'$，则有
+  - STEP1：空间点$X$在第一、第二幅视图中的像分别为 $\overrightarrow{x}$ 和 $\overrightarrow{x}'$ ，则有
     $$\overrightarrow{x} = K [I | 0] \overrightarrow{X}$$
     $$\overrightarrow{x}' = K' [R | t] \overrightarrow{X}$$
-    其中$K$和$K'$是两相机的内参矩阵，$R$和$t$是两相机之间的旋转和平移关系。
+    其中 $K$ 和 $K'$ 是两相机的内参矩阵， $R$ 和 $t$ 是两相机之间的旋转和平移关系。
   - STEP2：将$\overrightarrow{X}$表示为$\overrightarrow{x}$的函数，即$\overrightarrow{X} = K^{-1} \overrightarrow{x}$，代入第二幅视图 的像方程中，得到
     $$\overrightarrow{x}' = K' [R | t] K^{-1} \overrightarrow{x}$$
   - STEP3：定义基本矩阵$F$为$F = K' [R | t] K^{-1}$，则有
