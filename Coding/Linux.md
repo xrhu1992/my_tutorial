@@ -1,6 +1,6 @@
 # Linux
 ## Linux目录结构
-![Linux目录](pic/Linux/linux_catalog.png)
+![Linux目录](../pic/Linux/linux_catalog.png)
 *在linux中根目录的子目录结构相对是固定的(名字固定), 不同的目录功能是也是固定的*
 * bin: binary, 二进制文件目录, 存储了可执行程序, 今天要将的命令对应的可执行程序都在这个目录中
 * sbin: super binary, root用户使用的一些二进制可执行程序
@@ -33,12 +33,14 @@ xrhu@xrhu:~$ echo $PATH
     - Tab 命令自动补全，如果有多个候补再按一次Tab
     - ↑/↓ 显示输入的上/下一个历史命名
 ## 用户管理
-* \\
+* useradd -m newUser # 创建新用户并自动创建其登录目录
+* userdel -r oldUser # 删除用户及其关联的登录目录
+* passwd newUser # 为 newUser 设置密码
 ## 文件管理
 * touch 创建一个新文件
 * ls -a：显示全部文件，包括隐藏文件（文件名前加. 如 .a.txt）
 * ls -l: 以列表形式显示文件的详细信息
-![file info](pic/Linux/file_info.png)
+![file info](../pic/Linux/file_info.png)
 * 创建/删除文件目录
   - mkdir 创建目录，-p 删除多层目录<br>
     ` mkdir parent/child/baby1/baby2 -p`
