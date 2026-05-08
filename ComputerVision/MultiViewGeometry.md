@@ -6,13 +6,15 @@
 - **如何形成：** 如图所示，C为相机的光心，$X_1、X_2、X_3、X_4$是三维空间共线的点，当点$X_n$趋近于无穷远时，$CX_i=CD$，消影点为$v'$。因此，所有平行于$X_{i-1}X_i$的线段在图像中都会交汇于消影点$v'$。
   <p align="center">
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/vanishing_point_book.png" width = "400">
-  <br>消影点的形成
-  </p>
+  <br>消影点的形成</p>
 - **应用：**
-  - 估计相机的旋转
+  - 估计相机的旋转(如单目多视图下估计相机或物体的旋转矩阵)
   - 估计运动物体的运动方向（如汽车的行驶方向/飞行器的飞行方向）
-
-
+  - 利用影子判断太阳方向（无穷远处平行光线）
+  - AI生成图片/视频鉴别
+  <p align="center">
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/vanishing-point-application.jpg" width = "280">
+  <br>AI图片鉴别</p>
 
 # 2. 对极几何（Epipolar Geometry）
 ## 2.1 点-线-面的性质

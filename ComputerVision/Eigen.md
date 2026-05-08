@@ -1,5 +1,5 @@
 <p align="left">
-<img src="pic/Eigen/eigen_logo.png" width="70">
+<img src="../pic/Eigen/eigen_logo.png" width="70">
 </p>
 
 # Eigen
