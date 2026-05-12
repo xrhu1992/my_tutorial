@@ -3,10 +3,11 @@
 # 1. 单目散斑结构光（Single-View Structured Light）
 ## 1.1 原理
 <p align="center">
-<img src="https://developer-orbbec-oss.oss-cn-shenzhen.aliyuncs.com/images/c35783fb-17e3-45fe-aec4-5c1d8ef269cd.png" height = 320">
-<img src="https://picx.zhimg.com/v2-c01ce5dbc0b4a0401b16c4425a8dd6b7_1440w.jpg" height = "320">
-<br>图1.1.1 单目散斑结构光原理
-</p>
+<img src="https://developer-orbbec-oss.oss-cn-shenzhen.aliyuncs.com/images/c35783fb-17e3-45fe-aec4-5c1d8ef269cd.png" height = 300">
+<img src="https://picx.zhimg.com/v2-c01ce5dbc0b4a0401b16c4425a8dd6b7_1440w.jpg" height = "300">
+<br>图1.1.1 单目散斑结构光原理<br>
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/relation%20of%20depth%20and%20disparity.png" height = "320">
+<br>深度与视差的关系</p>
 
 - **参考图：** 在垂直相机光轴的某一**固定距离**拍摄，并经过**极线校正**后的图像。也可以引入参考平面方程$Ax+By+z=D$，可避免调垂直相机光轴位置和距离，降低标定难度。
 - 在3D视觉系统中，深度$z$与视差$\delta$成反比： $z = \frac{f \cdot B}{\delta}$，其中$f$为焦距，$B$为基线长度，将视差看成相对值，距离也可通过相对于参考距离计算得到。参考图1.1.1。
@@ -18,7 +19,7 @@
 
 > [!NOTE]
 > 1. 为什么不用DOE设计图（这样的话原理上更接近双目视觉）：参考图包含了系统的畸变信息，能更好地匹配实时图，也免去了对投射系统畸变建模。
-> 2. sensor与基线不平行
+> 2. sensor与基线不平行的情况如何处理？
 
 ## 1.2 极线配准
 <p align="center">
@@ -31,8 +32,9 @@
 
 ## 1.3 局部匹配（Local Matching）
 <p align="center">
-<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/matching%20cost%20computation.png" width = "500">
-<br>图1.3.1 实时图-参考图的匹配
+<img src="https://i-blog.csdnimg.cn/blog_migrate/b0bd7cae3d54567ecddc14572b56d598.png#pic_center" height = "300">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/matching%20cost%20computation.png" height = "300">
+<br>图1.3.1 实时图-参考图的极线校正与匹配
 </p> 
 
 ## 1.4 标定

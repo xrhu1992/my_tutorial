@@ -48,7 +48,7 @@
   - **对极平面（Epipolar Plane）：** 包含两个相机光心和空间点$P$的平面。（图中$PO_lO_r$平面）
   - **对极线（Epipolar Line）：** 对极平面与图像平面的交线。
     <p align="center">
-    <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_geometry.png" width = "450">
+    <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_geometry.png" width = "400">
     <br>对极几何
     </p>
   - **性质：** $F$是一个秩为2的矩阵，具有7个自由度，可以通过至少7对匹配点来估计。对于图像中的一个点$\overrightarrow{x}$，其对应的对极线可以通过$F\overrightarrow{x}$计算得到。
@@ -108,6 +108,23 @@
   $$\overrightarrow{l'} = F[\overrightarrow{e}]_\times \overrightarrow{l}$$
   $$\overrightarrow{l} = F^T[\overrightarrow{e'}]_\times \overrightarrow{l'}$$
   <p align="center">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_line_book.png" width = "400">
-  <br>对极线的单应
-  </p>
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_line_book.png" width = "360">
+  <br>对极线的单应</p>
+
+## 2.3 极线校正（Epipolar Rectification）
+### 2.3.1 理想的双目三角关系
+- **理想的双目三角关系：**
+  - 两相机成像平面共面（Coplanar），焦距相同$f_l=f_r$，两光轴平行（Parallel）并且与基线垂直（Perpendicular）。本质：极点无穷远
+  - 像素行对其（Row-Aligned），方便立体匹配（Stereo Matching）。
+  - 理想关系下其三角几何关系可描述为：
+  $$
+  Z=\frac{f_l f_r T}{f_l x_r - f_r x_l} \quad \text{或} \quad Z=\frac{f T}{x_r - x_l}
+  $$
+- **极线校正的目的：** 通过对图像进行单应变换，使得两幅图像满足上述理想的三角几何关系，从而简化立体匹配问题。校正后的图像中，对极线与图像行平行，且对应点在同一行上。
+<p align="center">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_rectification2.png" height = "250">
+<img src="  https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_rectification1.png" height = "250">
+<br>理想的双目三角关系 & 极线校正</p>
+
+### 2.3.2 Bouguet算法
+- 
