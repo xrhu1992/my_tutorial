@@ -13,8 +13,10 @@
   - 利用影子判断太阳方向（无穷远处平行光线）
   - AI生成图片/视频鉴别
   <p align="center">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/vanishing-point-application.jpg" width = "280">
-  <br>AI图片鉴别</p>
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-1.jpg" height = "250">
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-2.jpg" height = "250">
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-3.jpg" height = "250">
+  <br>利用消影点鉴别AI图片</p>
 
 # 2. 对极几何（Epipolar Geometry）
 ## 2.1 点-线-面的性质
@@ -43,7 +45,9 @@
 ## 2.2 基本矩阵$F$（Fundamental Matrix）
 ### 2.2.1 基本矩阵的定义
 - **定义：** $F$是一个秩为2的3x3矩阵，如果一个3维空间点$P$在第一、第二幅视图中的像分别为$\overrightarrow{x}$和$\overrightarrow{x}'$，则这两个图像点满足关系
-  $$\overrightarrow{x}'^T F \overrightarrow{x} = 0$$
+  $$
+  \overrightarrow{x}'^T F \overrightarrow{x} = 0
+  $$
   - **对极点（Epipole）：** 连接两相机光心的直线（基线）与像平面的交点。（图中$e_l$和$e_r$点）
   - **对极平面（Epipolar Plane）：** 包含两个相机光心和空间点$P$的平面。（图中$PO_lO_r$平面）
   - **对极线（Epipolar Line）：** 对极平面与图像平面的交线。
@@ -61,39 +65,64 @@
 
 - **代数推导：**
   - STEP1：空间点$X$在第一、第二幅视图中的像分别为 $\overrightarrow{x}$ 和 $\overrightarrow{x}'$ ，则有
-    $$\overrightarrow{x} = K [I | 0] \overrightarrow{X}$$
-    $$\overrightarrow{x}' = K' [R | t] \overrightarrow{X}$$
+    $$
+    \overrightarrow{x} = K [I | 0] \overrightarrow{X}
+    \\
+    \overrightarrow{x}' = K' [R | t] \overrightarrow{X}
+    $$
     其中 $K$ 和 $K'$ 是两相机的内参矩阵， $R$ 和 $t$ 是两相机之间的旋转和平移关系。
   - STEP2：将 $\overrightarrow{X}$ 表示为 $\overrightarrow{x}$ 的函数，即 $\overrightarrow{X} = K^{-1} \overrightarrow{x}$ ，代入第二幅视图 的像方程中，得到
-    $$\overrightarrow{x}' = K' [R | t] K^{-1} \overrightarrow{x}$$
+    $$
+    \overrightarrow{x}' = K' [R | t] K^{-1} \overrightarrow{x}
+    $$
   - STEP3：定义基本矩阵 $F$ 为 $F=K'[R|t]K^{-1}$ ，则有
-    $$\overrightarrow{x}'^T F \overrightarrow{x} = \overrightarrow{x}'^T K' [R | t] K^{-1} \overrightarrow{x} = 0$$
+    $$
+    \overrightarrow{x}'^T F \overrightarrow{x} = \overrightarrow{x}'^T K' [R | t] K^{-1} \overrightarrow{x} = 0
+    $$
     其中 $\overrightarrow{x}'^T K' [R | t] K^{-1} \overrightarrow{x}$ 表示 $\overrightarrow{x}'$ 与 $\overrightarrow{x}$ 之间的关系，满足对极几何约束.
 - **几何推导：**
   - STEP1：$H_\pi$是两幅图像上的点$x$和$x'$通过平面$\pi$的转移映射（单应矩阵），则有
-    $$\overrightarrow{x}' = H_\pi \overrightarrow{x}$$
+    $$
+    \overrightarrow{x}' = H_\pi \overrightarrow{x}
+    $$
   - STEP2：给定点$x'$，通过$x'$和极点$e'$的对极线$l'$为
-    $$\overrightarrow{l'} = \overrightarrow{e'} \times \overrightarrow{x'} = [\overrightarrow{e'}]_\times \overrightarrow{x'}$$
+    $$
+    \overrightarrow{l'} = \overrightarrow{e'} \times \overrightarrow{x'} = [\overrightarrow{e'}]_\times \overrightarrow{x'}
+    $$
   - STEP3：将$H_\pi$代入对极线方程中，得到
-    $$\overrightarrow{l'} = [\overrightarrow{e'}]_\times H_\pi \overrightarrow{x}$$
+    $$
+    \overrightarrow{l'} = [\overrightarrow{e'}]_\times H_\pi \overrightarrow{x}
+    $$
     定义基本矩阵$F$为$F = [\overrightarrow{e'}]_\times H_\pi$，则有
-    $$\overrightarrow{l'} = F \overrightarrow{x}$$
+    $$
+    \overrightarrow{l'} = F \overrightarrow{x}
+    $$
     $x'$是$l'$上的点，有
-    $$\overrightarrow{x'}^T \overrightarrow{l'} = \overrightarrow{x'}^T F \overrightarrow{x} = 0$$
+    $$
+    \overrightarrow{x'}^T \overrightarrow{l'} = \overrightarrow{x'}^T F \overrightarrow{x} = 0
+    $$
 - **总结：** 基本矩阵$F$可以通过两种方式计算得到：
   - 由内外参计算$F$
-    $$F = K' [R | t] K^{-1}$$
+    $$
+    F = K' [R | t] K^{-1}
+    $$
   - 由单应矩阵和极点计算$F$
-    $$F = [\overrightarrow{e'}]_\times H_\pi$$
+    $$
+    F = [\overrightarrow{e'}]_\times H_\pi
+    $$
 > [!NOTE]
 > 叉乘可以表示为一个3x3反对称矩阵与向量的乘积：
->  $$\overrightarrow{a} \times \overrightarrow{b} = [\overrightarrow{a}]_\times \overrightarrow{b}$$
+>  $$
+> \overrightarrow{a} \times \overrightarrow{b} = [\overrightarrow{a}]_\times \overrightarrow{b}
+> $$
 >  其中$[\overrightarrow{a}]_\times$是由$\overrightarrow{a}$构成的反对称矩阵：
->  $$[\overrightarrow{a}]_\times = \begin{bmatrix}
+>  $$
+> [\overrightarrow{a}]_\times = \begin{bmatrix}
 >  0 & -a_z & a_y \\
 >  a_z & 0 & -a_x \\
 >  -a_y & a_x & 0
->  \end{bmatrix}$$
+>  \end{bmatrix}
+> $$
 
 ### 2.2.3 基本矩阵的性质
 - $F$是自由度为7的秩2齐次矩阵
@@ -105,8 +134,11 @@
   - $F\overrightarrow{e}=0$，其中$\overrightarrow{e}$是左图的对极点。
   - $F^T\overrightarrow{e'}=0$，其中$\overrightarrow{e'}$是右图的对极点。
 - **对极线的单应：** 对极线在两幅图像之间存在单应关系，即如果$l$和$l'$分别是图像中的对极线，则有：
-  $$\overrightarrow{l'} = F[\overrightarrow{e}]_\times \overrightarrow{l}$$
-  $$\overrightarrow{l} = F^T[\overrightarrow{e'}]_\times \overrightarrow{l'}$$
+  $$
+  \overrightarrow{l'} = F[\overrightarrow{e}]_\times \overrightarrow{l}
+  \\
+  \overrightarrow{l} = F^T[\overrightarrow{e'}]_\times \overrightarrow{l'}
+  $$
   <p align="center">
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_line_book.png" width = "360">
   <br>对极线的单应</p>
