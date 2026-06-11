@@ -41,7 +41,7 @@
 - **点在面上：** $\overrightarrow{X}^T\overrightarrow{S}=0$，注意$\overrightarrow{X}$是齐次坐标（其实就是平面方程表达式）
 - **两点确定的面：** $\overrightarrow{S}=\overrightarrow{X}_1 \times \overrightarrow{X}_2$，注意$\overrightarrow{X}$是齐次坐标
 - **线-线的交面：** $\overrightarrow{S}=\overrightarrow{L}_1 \times \overrightarrow{L}_2$，其中$\overrightarrow{L}$是向量表示
-
+---
 ## 2.2 基本矩阵$F$（Fundamental Matrix）
 ### 2.2.1 基本矩阵的定义
 - **定义：** $F$是一个秩为2的3x3矩阵，如果一个3维空间点$P$在第一、第二幅视图中的像分别为$\overrightarrow{x}$和$\overrightarrow{x}'$，则这两个图像点满足关系
@@ -142,8 +142,9 @@
   <p align="center">
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_line_book.png" width = "360">
   <br>对极线的单应</p>
-
+---
 ## 2.3 极线校正（Epipolar Rectification）
+[参考《Learning OpenCV3》](https://github.com/jash-git/Learning-OpenCV-3/blob/master/Learning%20OpenCV%203.pdf)
 ### 2.3.1 理想的双目三角关系
 - **理想的双目三角关系：**
   - 两相机成像平面共面（Coplanar），焦距相同$f_l=f_r$，两光轴平行（Parallel）并且与基线垂直（Perpendicular）。本质：极点无穷远
@@ -152,11 +153,77 @@
   $$
   Z=\frac{f_l f_r T}{f_l x_r - f_r x_l} \quad \text{或} \quad Z=\frac{f T}{x_r - x_l}
   $$
-- **极线校正的目的：** 通过对图像进行单应变换，使得两幅图像满足上述理想的三角几何关系，从而简化立体匹配问题。校正后的图像中，对极线与图像行平行，且对应点在同一行上。
+
+- **极线校正的目的：** 通过对图像进行单应变换，使得两幅图像满足上述理想的三角几何关系，从而简化立体匹配问题。校正后的图像中，对极线与图像行平行，且对应点在同一行上（匹配点的y坐标相同）。
 <p align="center">
 <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_rectification2.png" height = "250">
 <img src="  https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_rectification1.png" height = "250">
 <br>理想的双目三角关系 & 极线校正</p>
 
 ### 2.3.2 Bouguet算法
-- 
+- **相机坐标系视角（左相机）**
+- **核心思想：** 最小化重投影畸变（校正后图像变化最小）
+
+- **STEP 1 - 使左右相机光轴平行：** 将两相机的旋转矩阵$R_{l2r}$分解成两部分$r_l$和$r_r$，分别使左右相机旋转一半。可使用Rodrigues变换表示，即：
+  $$\begin{aligned}
+  V_{l2r} &= \text{Rodrigues}(R_{l2r}) \\
+  r_r &= \text{Rodrigues}(\frac{1}{2} V_{l2r}) \\
+  r_l &= \text{Rodrigues}(\frac{1}{2} V_{l2r})
+  \end{aligned}$$
+  > [!NOTE]
+  > 1. 这一步看起来有点多此一举了，实际上在Fusiello算法中省略了这一步，直接将两相机旋转到新坐标系下，而非两次旋转。这样做的目的是为了使得两相机旋转的程度相同，保证校正后的图像变化最小，但实际应用中可以通过修改内参矩阵的fx和fy来达到相似的效果。
+  > 2. 需要注意，旋转后相机外参的旋转矩阵$R$和平移矩阵$T$也需要相应地进行变换才能继续应用到后续步骤中。（蝴蝶书中对此未作说明和推导，容易误导）
+
+- **STEP 2 - 使左右相机光轴垂直于基线：** 以基线方向为x轴建立一个新的坐标系，并构造旋转矩阵，使得左右相机的光轴垂直于基线，极点无穷远
+  $$R = [\overrightarrow{e_1}, \overrightarrow{e_2}, \overrightarrow{e_3}]^T$$
+  - $\overrightarrow{e_1}$为基线方向，即
+  $$
+  \overrightarrow{e_1}=\frac{\overrightarrow{T}}{\|\overrightarrow{T} \|}
+  $$
+  - $\overrightarrow{e_2}$垂直于左相机光轴和基线的平面，即
+  $$\begin{aligned}
+  \overrightarrow{e} &= [0,0,1]^T \times [Tx,Ty,Tz]^T \\ 
+  &= [-Ty,Tx,0]^T \\ 
+  \overrightarrow{e_2} &= \frac{\overrightarrow{e}}{\|\overrightarrow{e} \|}
+  \end{aligned}$$
+  - $\overrightarrow{e_3}$为$\overrightarrow{e_1}$和$\overrightarrow{e_2}$的叉积
+  $$
+  \overrightarrow{e_3} = \overrightarrow{e_1} \times \overrightarrow{e_2}
+  $$
+  - 得到的旋转矩阵$R$是将新坐标系下的点转换到左相机坐标系的旋转矩阵，对其取逆（或转置-单位正交阵的性质）即可得到将左相机坐标系转换到新坐标系的旋转矩阵$R_{rect}$
+  $$\begin{aligned}
+  R_{rect} &= R^{-1}=R^T \\ 
+  &= \begin{bmatrix}
+     \overrightarrow{e_1}^T \\
+     \overrightarrow{e_2}^T \\
+     \overrightarrow{e_3}^T
+     \end{bmatrix}
+  \end{aligned}$$
+> [!NOTE] 
+> 为了确保新的坐标系与原相机坐标系方向大致相同，需注意使 $e_1.x>0,e_2.y>0,e_3.z>0$
+
+- **STEP 3- 构建新的相机内参矩阵：** 为了使左右相机平面共面且行对其，需要使左右相机内参矩阵相等，为此构建新的相机内参矩阵$M_{rect}$
+  - 在新的坐标系下任意空间点P，其在左右相机的像素坐标分别为
+  $$\begin{aligned}
+  P_l =M_{rect,l} \dot {P_l} \\
+  P_r =M_{rect,r} \dot {P_r}
+  \end{aligned}$$
+
+
+
+- **STEP 4 - 应用旋转矩阵：** 将得到的旋转矩阵$R_{rect}$应用于两幅图像，完成极线校正。
+  - 左右相机的旋转矩阵分别为
+  $$
+  R_l = R_{rect} r_l \\
+  R_r = R_{rect} r_r
+  $$
+  - 校正后的内参矩阵可以选择为两相机内参的平均值，即$K_{rect} = \frac{K_l + K_r}{2}$。
+  - 最终得到的校正后相机参数为：
+  $$\begin{aligned}
+  P_l &= K_{rect} [R_l | t_l] \\
+  P_r &= K_{rect} [R_r | t_r]
+  \end{aligned}$$
+
+### 2.3.3 Fusiello算法
+- **世界坐标系视角**
+  

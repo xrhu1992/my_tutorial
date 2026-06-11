@@ -57,7 +57,9 @@
   - 绝对值 `|x+y|`  $|x+y|$
 * **逻辑运算符**
   - 大于  `x>y` $x>y$
-  - 大于等于  `x>=y` $x>=y$
+  - 大于等于(greater than or equal to)  `x \geq y` $x \geq y$
+  - 小于等于(less than or equal to)  `x \leq y` $x \leq y$
+  - 不等于(not equal to)  `x \neq y` $x \neq y$
 * **高等运算符**
   - 平均数  `\overline{xyz}` $\overline{xyz}$
   - 二次方根  `\sqrt x` $\sqrt x$
