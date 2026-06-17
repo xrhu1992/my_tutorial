@@ -86,7 +86,7 @@ I_4 &= A + B \cdot \cos\left(\phi + \frac{3\pi}{2}\right) = A + B \cdot \sin\phi
 $$
 其中，$\phi$是相位。通过这四个图案的强度值，可以计算出相位$\phi$：
 $$ \phi = \arctan\left(\frac{I_4 - I_2}{I_1 - I_3}\right) $$
-此外，$A$是背景光强（Background Intensity），$B$是调制幅度（Modulation Amplitude），$B$调制幅度反映了条纹质量。
+此外，$A$是背景光强（Background Intensity），对应投射纯黑时的背景图像，$B$是调制幅度（Modulation Amplitude），对应投射纯白图案时图案亮度减去背景亮度，反映了条纹质量。
 $$
 \begin{aligned}
 A &= \frac{I_1 + I_2 + I_3 + I_4}{4}\\
@@ -163,8 +163,3 @@ $$
 ## 5.2 编码规则
 - **条纹结构光编码：** 假设以蓝（0）绿（1）和蓝绿混合的青色（2）三种颜色编码，即k=3，当编码长度为n=4时，德布鲁因序列B(3,4)的长度为 $3^4=81$，可以编码81+(4-1)=84个条纹。当n=3时，B(3,3)的长度为 $3^3=27$，可以编码27+(3-1)=29个条纹。
  
-
-
-
-
-

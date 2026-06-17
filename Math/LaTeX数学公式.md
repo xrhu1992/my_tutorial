@@ -71,6 +71,13 @@
   - 积分1 `\int^{\infty}_{0}{xdx}` $\int^{\infty}_{0}{xdx}$
   - 积分2 `\displaystyle \int^{\infty}_{0}{xdx}` $\displaystyle \int^{\infty}_{0}{xdx}$
   - 微分 `\frac{\partial x}{\partial y}` $\frac{\partial x}{\partial y}$
+* **字体样式**
+  - 正常字体 `\text{xyz}` $\text{xyz}$
+  - 文字粗体 `\textbf{xyz}` $\textbf{xyz}$
+  - 向量粗体 `\mathbf{xyz}` $\mathbf{xyz}$
+  - 字母粗体 `\boldsymbol{xyz}` $\boldsymbol{xyz}$
+  - 斜体 `\textit{xyz}` $\textit{xyz}$
+  - 下划线 `\underline{xyz}` $\underline{xyz}$
 
 ## **数学结构**
 ![数学结构](../pic/markdown/math_constructs.png)<br>
@@ -130,5 +137,30 @@ $[$ $x$ $y$ $z$ $]$
   \end{bmatrix}
   ```
 
-
+## **方程**
+* 方程换行：使用 `\\` 换行
+* 方程对齐：使用`\begin{aligned}`开始对齐， 使用 & 对齐，使用`\end{aligned}` 结束对齐
+  ```
+  \begin{aligned}
+  y &= k_1x+b_1 \\
+  &= k_2x+b_2
+  \end{aligned}
+  ```
+  ```math
+  \begin{aligned}
+  y &= k_1x+b_1 \\
+  &= k_2x+b_2
+  \end{aligned}
+  ```
+* 方程序号：使用`\begin{equation}`开始编号，使用 `\tag{编号}` 来添加编号，使用`\end{equation}` 结束编号
+  ```
+  \begin{equation}
+  y_1 = kx_1+b \tag{1}
+  \end{equation}
+  ```
+  ```math
+  \begin{equation}
+  y_1 = kx_1+b \tag{1}
+  \end{equation}
+  ```
 

@@ -1,49 +1,31 @@
 # 多视图几何（Multi-View Geometry）
 ---
-# 1. 单视图几何（Single-View Geometry）
-## 1.1 消影点（Vanishing Point）
-- **定义：** 图像中平行于某一方向的线段在图像中交汇的点。对于一个三维空间中的平行线段，在二维图像中会收敛于一个消影点。消影点代表某一方向的无穷远点。
-- **如何形成：** 如图所示，C为相机的光心，$X_1、X_2、X_3、X_4$是三维空间共线的点，当点$X_n$趋近于无穷远时，$CX_i=CD$，消影点为$v'$。因此，所有平行于$X_{i-1}X_i$的线段在图像中都会交汇于消影点$v'$。
-  <p align="center">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/vanishing_point_book.png" width = "400">
-  <br>消影点的形成</p>
-- **应用：**
-  - 估计相机的旋转(如单目多视图下估计相机或物体的旋转矩阵)
-  - 估计运动物体的运动方向（如汽车的行驶方向/飞行器的飞行方向）
-  - 利用影子判断太阳方向（无穷远处平行光线）
-  - AI生成图片/视频鉴别
-  <p align="center">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-1.jpg" height = "250">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-2.jpg" height = "250">
-  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-3.jpg" height = "250">
-  <br>利用消影点鉴别AI图片</p>
 
-# 2. 对极几何（Epipolar Geometry）
-## 2.1 点-线-面的性质
-### 2.1.1 2D空间表示
+# 1. 点-线-面的表示与性质（Point-Line-Surface Representation and Properties）
+## 1.1 2D平面点-线表示
 - **平面点：** $\overrightarrow{x}=(x,y)^T$ ，齐次表示： $\overrightarrow{x}=(x,y,1)^T$
 - **平面线：** $ax+by+c=0$，向量表示：$\overrightarrow{l}=(a,b,c)^T$，其中$\overrightarrow{n}=(a,b)$$为线的法向量
 
 > [!NOTE] 
 > 点的齐次坐标表示为$\overrightarrow{x}=(x,y,w)^T$ ，其中$w$是一个非零的缩放因子。对于一个点的齐次坐标可以通过除以$w$来得到其对应的非齐次坐标，即$(\frac{x}{w}, \frac{y}{w})$。当$w=0$时，表示一个点在无穷远处。
 
-### 2.1.2 2D空间性质
-- **点在直线上：** $\overrightarrow{x}^T\overrightarrow{l}=0$，注意$\overrightarrow{x}$是齐次坐标（其实就是直线方程表达式）
+## 1.2 2D平面点-线性质
+- **点在直线上：** $\overrightarrow{x}^T\overrightarrow{l}=0$，注意$\overrightarrow{x}$是齐次坐标（其实就是把点$\overrightarrow{x}$代入直线方程表达式）
 - **线-线的交点：** $\overrightarrow{x}=\overrightarrow{l}_1 \times \overrightarrow{l}_2$，注意$\overrightarrow{l}$是向量表示
 - **两点确定的直线：** $\overrightarrow{l}=\overrightarrow{x}_1 \times \overrightarrow{x}_2$，注意$\overrightarrow{x}$是齐次坐标
 
-### 2.1.3 3D空间表示
+## 1.3 3D空间点-线-面表示
 - **空间点：** $\overrightarrow{X}=(X,Y,Z)^T$，齐次表示： $\overrightarrow{X}=(X,Y,Z,1)^T$
 - **空间线：** $\overrightarrow{L}=(\overrightarrow{P},\overrightarrow{V})$，其中$\overrightarrow{P}$为线上的一个点，$\overrightarrow{V}$为线的方向向量
 - **空间面：** $aX+bY+cZ+d=0$，向量表示：$\overrightarrow{S}=(a,b,c,d)^T$，其中$\overrightarrow{n}=(a,b,c)$为面的法向量
 
-### 2.1.4 3D空间性质
-- **点在面上：** $\overrightarrow{X}^T\overrightarrow{S}=0$，注意$\overrightarrow{X}$是齐次坐标（其实就是平面方程表达式）
-- **两点确定的面：** $\overrightarrow{S}=\overrightarrow{X}_1 \times \overrightarrow{X}_2$，注意$\overrightarrow{X}$是齐次坐标
-- **线-线的交面：** $\overrightarrow{S}=\overrightarrow{L}_1 \times \overrightarrow{L}_2$，其中$\overrightarrow{L}$是向量表示
+## 1.4 3D空间点-线-面性质
+- **点在面上：** $\overrightarrow{X}^T\overrightarrow{S}=0$，注意$\overrightarrow{X}$是齐次坐标（其实就是点$\overrightarrow{X}$代入平面方程表达式）
 ---
-## 2.2 基本矩阵$F$（Fundamental Matrix）
-### 2.2.1 基本矩阵的定义
+
+# 2. 对极几何（Epipolar Geometry）
+## 2.1 基本矩阵$F$（Fundamental Matrix）
+### 2.1.1 基本矩阵的定义
 - **定义：** $F$是一个秩为2的3x3矩阵，如果一个3维空间点$P$在第一、第二幅视图中的像分别为$\overrightarrow{x}$和$\overrightarrow{x}'$，则这两个图像点满足关系
   $$
   \overrightarrow{x}'^T F \overrightarrow{x} = 0
@@ -57,39 +39,51 @@
     </p>
   - **性质：** $F$是一个秩为2的矩阵，具有7个自由度，可以通过至少7对匹配点来估计。对于图像中的一个点$\overrightarrow{x}$，其对应的对极线可以通过$F\overrightarrow{x}$计算得到。
 
-### 2.2.2 基本矩阵的推导证明
-<p align="center">
-<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_geometry_book_1.png" width = "600">
-<br>对极几何
-</p>
-
+### 2.1.2 基本矩阵的推导证明
 - **代数推导：**
-  - STEP1：空间点$X$在第一、第二幅视图中的像分别为 $\overrightarrow{x}$ 和 $\overrightarrow{x}'$ ，则有
+  - 空间点$P$在第一、第二相机中的空间坐标分别为 $\overrightarrow{X}$ 和 $\overrightarrow{X}'$ （注意是非齐次空间坐标），则有
     $$
-    \overrightarrow{x} = K [I | 0] \overrightarrow{X}
-    \\
-    \overrightarrow{x}' = K' [R | t] \overrightarrow{X}
+    \overrightarrow{X}' = R\overrightarrow{X} + \overrightarrow{t}
     $$
-    其中 $K$ 和 $K'$ 是两相机的内参矩阵， $R$ 和 $t$ 是两相机之间的旋转和平移关系。
-  - STEP2：将 $\overrightarrow{X}$ 表示为 $\overrightarrow{x}$ 的函数，即 $\overrightarrow{X} = K^{-1} \overrightarrow{x}$ ，代入第二幅视图 的像方程中，得到
+    其中 $R$ 和 $t$ 是两相机之间的旋转和平移关系。（注意 $R$ 和 $t$ 是由第一相机转到第二相机，在第二相机视角下的坐标）
+  - 两边同时叉乘 $\overrightarrow{t}$ ，得到由 $\overrightarrow{X}$ 表示的对极线$l$，则有（注意到$\overrightarrow{t} \times \overrightarrow{t}=0$）
     $$
-    \overrightarrow{x}' = K' [R | t] K^{-1} \overrightarrow{x}
+    \overrightarrow{t} \times \overrightarrow{X}' = \overrightarrow{t} \times R\overrightarrow{X} + \overrightarrow{t} \times \overrightarrow{t} = \overrightarrow{t} \times R\overrightarrow{X}
     $$
-  - STEP3：定义基本矩阵 $F$ 为 $F=K'[R|t]K^{-1}$ ，则有
+  - 两边同时左乘 $\overrightarrow{X}'^T$ ，得到
     $$
-    \overrightarrow{x}'^T F \overrightarrow{x} = \overrightarrow{x}'^T K' [R | t] K^{-1} \overrightarrow{x} = 0
+    \overrightarrow{X}'^T(\overrightarrow{t} \times \overrightarrow{X}') = \overrightarrow{X}'^T(\overrightarrow{t} \times R\overrightarrow{X})
     $$
-    其中 $\overrightarrow{x}'^T K' [R | t] K^{-1} \overrightarrow{x}$ 表示 $\overrightarrow{x}'$ 与 $\overrightarrow{x}$ 之间的关系，满足对极几何约束.
+    注意到等式左边 $\overrightarrow{X}'^T(\overrightarrow{t} \times R\overrightarrow{X})$ 中，$\overrightarrow{t} \times R\overrightarrow{X}$ 表示与对极平面垂直的向量，而向量 $\overrightarrow{X}'$ 与对极平面垂直，所以 $\overrightarrow{X}'^T(\overrightarrow{t} \times R\overrightarrow{X}) = 0$。由此可得
+    $$\overrightarrow{X}'^T(\overrightarrow{t} \times R\overrightarrow{X})=0$$
+    写成矩阵型式为
+    $$\overrightarrow{X}'^T [\overrightarrow{t}] _\times R\overrightarrow{X} = 0$$
+  - 令本质矩阵为 $E = [\overrightarrow{t}] \times R$，则有
+    $$\overrightarrow{X}'^T E \overrightarrow{X} = 0$$
+  - 假设第一、第二相机的内参矩阵为$K$和$K'$，空间点$P$在相机中的像素坐标分别为 $\overrightarrow{x}$ 和 $\overrightarrow{x}'$ ，有
+  $$
+  \overrightarrow{x} = KX \implies \overrightarrow{X} = K^{-1} \overrightarrow{x} \\
+  \overrightarrow{x}' = K'X' \implies \overrightarrow{X}' = K'^{-1} \overrightarrow{x}'
+  $$
+  代入本质矩阵方程可得
+  $$
+  \overrightarrow{X}'^T [\overrightarrow{t}] _\times R\overrightarrow{X} = \overrightarrow{x}'^T K'^{-T}  [\overrightarrow{t}] _\times RK^{-1} \overrightarrow{x}
+  $$
+  - 令基础矩阵为 $F = K'^{-T}  [\overrightarrow{t}] _\times RK^{-1}$，则有
+  $$
+  \overrightarrow{x}'^T F \overrightarrow{x} = 0
+  $$
+
 - **几何推导：**
-  - STEP1：$H_\pi$是两幅图像上的点$x$和$x'$通过平面$\pi$的转移映射（单应矩阵），则有
+  - $H_\pi$是两幅图像上的点$x$和$x'$通过诱导平面$\pi$的转移映射（单应矩阵），则有
     $$
     \overrightarrow{x}' = H_\pi \overrightarrow{x}
     $$
-  - STEP2：给定点$x'$，通过$x'$和极点$e'$的对极线$l'$为
+  - 给定点$x'$，通过$x'$和极点$e'$的对极线$l'$为
     $$
     \overrightarrow{l'} = \overrightarrow{e'} \times \overrightarrow{x'} = [\overrightarrow{e'}]_\times \overrightarrow{x'}
     $$
-  - STEP3：将$H_\pi$代入对极线方程中，得到
+  - 将$H_\pi$代入对极线方程中，得到
     $$
     \overrightarrow{l'} = [\overrightarrow{e'}]_\times H_\pi \overrightarrow{x}
     $$
@@ -101,20 +95,19 @@
     $$
     \overrightarrow{x'}^T \overrightarrow{l'} = \overrightarrow{x'}^T F \overrightarrow{x} = 0
     $$
+  <p align="center">
+  <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_geometry_book_1.png" width = "500">
+  <br>基础矩阵的几何推导</p>
+
 - **总结：** 基本矩阵$F$可以通过两种方式计算得到：
   - 由内外参计算$F$
-    $$
-    F = K' [R | t] K^{-1}
-    $$
+    $$F = K'^{-T}  [\overrightarrow{t}] _\times RK^{-1}$$
   - 由单应矩阵和极点计算$F$
-    $$
-    F = [\overrightarrow{e'}]_\times H_\pi
-    $$
+    $$F = [\overrightarrow{e'}]_\times H_\pi$$
+
 > [!NOTE]
 > 叉乘可以表示为一个3x3反对称矩阵与向量的乘积：
->  $$
-> \overrightarrow{a} \times \overrightarrow{b} = [\overrightarrow{a}]_\times \overrightarrow{b}
-> $$
+>  $$\overrightarrow{a} \times \overrightarrow{b} = [\overrightarrow{a}]_\times \overrightarrow{b}$$
 >  其中$[\overrightarrow{a}]_\times$是由$\overrightarrow{a}$构成的反对称矩阵：
 >  $$
 > [\overrightarrow{a}]_\times = \begin{bmatrix}
@@ -124,7 +117,7 @@
 >  \end{bmatrix}
 > $$
 
-### 2.2.3 基本矩阵的性质
+### 2.1.3 基本矩阵的性质
 - $F$是自由度为7的秩2齐次矩阵
 - **点对应关系**：如果$x$和$x'$是同一空间点在两幅图像中的对应点，则满足$\overrightarrow{x}'^T F \overrightarrow{x} = 0$。
 - **对极线**
@@ -142,10 +135,10 @@
   <p align="center">
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_line_book.png" width = "360">
   <br>对极线的单应</p>
----
-## 2.3 极线校正（Epipolar Rectification）
+  
+## 2.2 极线校正（Epipolar Rectification）
 [参考《Learning OpenCV3》](https://github.com/jash-git/Learning-OpenCV-3/blob/master/Learning%20OpenCV%203.pdf)
-### 2.3.1 理想的双目三角关系
+### 2.2.1 理想的双目三角关系
 - **理想的双目三角关系：**
   - 两相机成像平面共面（Coplanar），焦距相同$f_l=f_r$，两光轴平行（Parallel）并且与基线垂直（Perpendicular）。本质：极点无穷远
   - 像素行对其（Row-Aligned），方便立体匹配（Stereo Matching）。
@@ -160,7 +153,7 @@
 <img src="  https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/epipolar_rectification1.png" height = "250">
 <br>理想的双目三角关系 & 极线校正</p>
 
-### 2.3.2 Bouguet算法
+### 2.2.2 Bouguet算法（公式推导有误，待修正。。。）
 - **相机坐标系视角（左相机）**
 - **核心思想：** 最小化重投影畸变（校正后图像变化最小）
 
@@ -224,6 +217,102 @@
   P_r &= K_{rect} [R_r | t_r]
   \end{aligned}$$
 
-### 2.3.3 Fusiello算法
-- **世界坐标系视角**
+### 2.2.3 Fusiello算法
+> [A Compact Algorithm for Rectification of Stereo Pairs]()
+
+待补充。。。
+
+--- 
+# 3. 三角测量（Triangulation）
+> [《多视图几何》-Chapter-12]()
+## 3.1 双目系统三角测量（Stereo Triangulation）
+### 3.1.1 双目系统模型
+设双目系统的相机参数分别为$K_1$和$K_2$，像素的齐次坐标分别为$x_1=[u_1,v_1,1]^T$和$x_2=[u_2,v_2,1]^T$，外参矩阵为$R_{12}$和$t_{12}$，摄像机矩阵分别为$P_1$和$P_2$，空间点在主相机1的坐标系下的齐次坐标为$X=[x,y,z,1]^T$，则有
+$$ \begin{aligned}
+z_{c1}\begin{bmatrix}u_1\\v_1\\1\end{bmatrix} &= K_1 [I | 0]X = P_1 X \\
+z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X \\
+\end{aligned}$$
+
+### 3.1.2 二维匹配点的线性三角测量
+> [OpenCV三角测量重建triangulatePoints原理解析](https://blog.csdn.net/weixin_43956164/article/details/124266267)
+- **核心思想：** 已知双目匹配点的像素位置，利用双目系统的空间关系，求解出空间点在相机坐标系下的空间坐标。
+- **适用场景：** 通过二维匹配获得匹配点对，如利用特征匹配进行稀疏重建。对应于OpenCV中的`cv::triangulatePoints()`函数。
+- **推导：** 设摄像机矩阵为$P=[\mathbf{p_1};\mathbf{p_2};\mathbf{p_3}]$，像素的齐次坐标为$\overrightarrow{x}=[u,v,1]^T$，空间点在主相机坐标系下的齐次坐标为
+  $$
+  z_c\overrightarrow{x}=P\overrightarrow{X} \\ 
+  z_c\begin{bmatrix}u\\v\\1\end{bmatrix}
+  =P\overrightarrow{X}
+  =\begin{bmatrix}\mathbf{p_1} \\ \mathbf{p_2} \\\mathbf{p_3}\end{bmatrix}\overrightarrow{X}
+  =\begin{bmatrix}\mathbf{p_1}\overrightarrow{X} \\ \mathbf{p_2}\overrightarrow{X} \\\mathbf{p_3}\overrightarrow{X}\end{bmatrix}
+  =\mathbf{p_3}\overrightarrow{X}\begin{bmatrix}\frac{\mathbf{p_1}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X}} \\ \frac{\mathbf{p_2}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X} } \\1\end{bmatrix}\\
+  \Downarrow \\
+  \begin{bmatrix}u\\v\end{bmatrix}
+  =\begin{bmatrix}\frac{\mathbf{p_1}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X}} \\ \frac{\mathbf{p_2}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X} } \end{bmatrix}\\
+  \Downarrow \\
+  \begin{bmatrix}u\\v\end{bmatrix}
+  -\begin{bmatrix}\frac{\mathbf{p_1}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X}} \\ \frac{\mathbf{p_2}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X} } \end{bmatrix}
+  =\begin{bmatrix}u-\frac{\mathbf{p_1}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X}} \\ v-\frac{\mathbf{p_2}\overrightarrow{X}}{\mathbf{p_3}\overrightarrow{X} } \end{bmatrix}=0
+  $$
+  等式两边同时乘以$\mathbf{p_3}\overrightarrow{X}$，可得
+  $$
+  \begin{bmatrix}u\mathbf{p_3}\overrightarrow{X}-\mathbf{p_1}\overrightarrow{X} \\ v\mathbf{p_3}\overrightarrow{X}-\mathbf{p_2}\overrightarrow{X} \end{bmatrix}
+  =\begin{bmatrix}u\mathbf{p_3}-\mathbf{p_1} \\ v\mathbf{p_3}-\mathbf{p_2} \end{bmatrix}\overrightarrow{X}=0\\
+  \Downarrow
+  $$
   
+  $$\begin{equation}
+  \begin{bmatrix}u\mathbf{p_3}-\mathbf{p_1} \\ v\mathbf{p_3}-\mathbf{p_2} \end{bmatrix}\overrightarrow{X}=0
+  \tag{1}
+  \end{equation}$$
+  将双目相机$P$和$P'$的两个匹配点$\overrightarrow{x}=[u,v,1]^T$和$\overrightarrow{x'}=[u',v',1]^T$代入等式，可得到由4个方程组成的超静定方程组
+  $$
+  \begin{bmatrix}
+  u\mathbf{p_3}-\mathbf{p_1} \\
+  v\mathbf{p_3}-\mathbf{p_2} \\
+  u'\mathbf{p_3'}-\mathbf{p_1'} \\
+  v'\mathbf{p_3'}-\mathbf{p_2'} \\
+  \end{bmatrix}
+  \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
+  $$
+  使用SVD求最小二乘解，可得到空间点在主相机1的坐标系下的齐次坐标 
+  $$
+  X=\begin{bmatrix}x\\y\\z\\1\end{bmatrix}=\begin{bmatrix}x_0/x_3\\x_1/x_3\\x_2/x_3\\x_3/x_3\end{bmatrix}
+  $$
+  对于存在多个不确定匹配点的场景，还可以利用反投影误差来选择最优的匹配点对。
+
+  
+> [!NOTE]
+> 在《多视图几何》书中，使用共线的向量叉乘等于0向量这一性质来简化推导，即
+> $$z_c\begin{bmatrix}u\\v\\1\end{bmatrix}=P\begin{bmatrix}x\\y\\z\\1\end{bmatrix}\\
+> z_c\overrightarrow{x}=P\overrightarrow{X}$$
+> $\overrightarrow{x}$ 与 $P\overrightarrow{X}$ 是共线（线性相关）的，所以
+> $$\overrightarrow{x} \times (P\overrightarrow{X}) = 0$$
+> 其中$\overrightarrow{x}=[u,v,1]^T$和$\overrightarrow{X}=[x,y,z,1]^T$，$P=[\mathbf{p_1};\mathbf{p_2};\mathbf{p_3}]$是摄像机矩阵，$z_c$ 是在相机坐标系下的空间点的z坐标。
+> 将$\overrightarrow{x}$的叉乘写成反对称矩阵型式有
+> $$
+> \overrightarrow{x} \times (P\overrightarrow{X}) = \begin{bmatrix}
+> 0 & -1 & v \\
+> 1 & 0 & -u \\
+> -v & u & 0
+> \end{bmatrix}
+> \begin{bmatrix}
+> \mathbf{p_1}  \\ \mathbf{p_2}  \\\mathbf{p_3}
+> \end{bmatrix}
+> \begin{bmatrix}x\\y\\z\\1\end{bmatrix} = 
+> \begin{bmatrix}
+> -\mathbf{p_2}+v\mathbf{p_3} \\
+> \mathbf{p_1}-u\mathbf{p_3}  \\
+> -v\mathbf{p_1}+u\mathbf{p_2} \\
+> \end{bmatrix}
+> \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
+> $$
+> 等式右边第三行与第一二行线性相关，所以可以将第三行消去，得到
+> $$
+> \begin{bmatrix}
+> -\mathbf{p_2}+v\mathbf{p_3} \\
+> \mathbf{p_1}-u\mathbf{p_3}  \\
+> \end{bmatrix}
+> \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
+> $$
+> 该方程与之前推导的方程(1)相同。
+
