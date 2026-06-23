@@ -237,7 +237,7 @@ z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X 
 > [OpenCV三角测量重建triangulatePoints原理解析](https://blog.csdn.net/weixin_43956164/article/details/124266267)
 - **核心思想：** 已知双目匹配点的像素位置，利用双目系统的空间关系，求解出空间点在相机坐标系下的空间坐标。
 - **适用场景：** 通过二维匹配获得匹配点对，如利用特征匹配进行稀疏重建。对应于OpenCV中的`cv::triangulatePoints()`函数。
-- **推导：** 设摄像机矩阵为$P=[\mathbf{p_1};\mathbf{p_2};\mathbf{p_3}]$，像素的齐次坐标为$\overrightarrow{x}=[u,v,1]^T$，空间点在主相机坐标系下的齐次坐标为
+- **推导：** 设摄像机矩阵$P=[\mathbf{p_1};\mathbf{p_2};\mathbf{p_3}]$，像素的齐次坐标$\overrightarrow{x}=[u,v,1]^T$，空间点在主相机坐标系下的齐次坐标$\overrightarrow{X}=[x,y,z,1]^T$
   $$
   z_c\overrightarrow{x}=P\overrightarrow{X} \\ 
   z_c\begin{bmatrix}u\\v\\1\end{bmatrix}
@@ -262,7 +262,7 @@ z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X 
   
   $$\begin{equation}
   \begin{bmatrix}u\mathbf{p_3}-\mathbf{p_1} \\ v\mathbf{p_3}-\mathbf{p_2} \end{bmatrix}\overrightarrow{X}=0
-  \tag{1}
+  \tag{3.1}
   \end{equation}$$
   将双目相机$P$和$P'$的两个匹配点$\overrightarrow{x}=[u,v,1]^T$和$\overrightarrow{x'}=[u',v',1]^T$代入等式，可得到由4个方程组成的超静定方程组
   $$
@@ -274,12 +274,11 @@ z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X 
   \end{bmatrix}
   \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
   $$
-  使用SVD求最小二乘解，可得到空间点在主相机1的坐标系下的齐次坐标 
+  使用SVD求最小二乘解，可得到空间点在主相机坐标系下的齐次坐标
   $$
   X=\begin{bmatrix}x\\y\\z\\1\end{bmatrix}=\begin{bmatrix}x_0/x_3\\x_1/x_3\\x_2/x_3\\x_3/x_3\end{bmatrix}
   $$
   对于存在多个不确定匹配点的场景，还可以利用反投影误差来选择最优的匹配点对。
-
   
 > [!NOTE]
 > 在《多视图几何》书中，使用共线的向量叉乘等于0向量这一性质来简化推导，即
@@ -314,5 +313,17 @@ z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X 
 > \end{bmatrix}
 > \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
 > $$
-> 该方程与之前推导的方程(1)相同。
+> 该方程与之前推导的公式(3.1)相同。
+
+### 3.1.3 最小化几何误差（Minimization of Geometric Error）
+双目匹配测量点往往是一组不满足对极几何约束的含噪声点对 $x \leftrightarrow x'$ ，实际对应图像点的正确值应该是在测量点附近的点 $\widehat{x} \leftrightarrow \widehat{x}'$ ,且精确满足对极几何约束 $\widehat{x}'^T F \widehat{x}=0$。为了计算这样的点对，寻找最小化误差函数（等价于最小化 $\widehat{X}$ 的反投影误差函数）
+$$\begin{aligned}
+&C(\mathbf{x},\mathbf{x'}) = d(\mathbf{x},\mathbf{\widehat{x}})+d(\mathbf{x'},\mathbf{\widehat{x}'}) \\
+and:\quad &\mathbf{\widehat{x}'}^T F \mathbf{\widehat{x}} = 0
+\end{aligned}$$
+可使用最大似然估计(MLE) 或 Levenberg-Marquardt 或 Sampson 算法来最小化误差函数。
+<p align="center">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/minimization_of_geometric_error.png" width = "450">
+<br>最小化几何误差</p>
+
 
