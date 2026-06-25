@@ -18,3 +18,47 @@
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-2.jpg" height = "250">
   <img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tutorial_vanishing-point-application-3.jpg" height = "250">
   <br>利用消影点鉴别AI图片</p>
+
+## 2. 畸变模型（Distortion Model）
+### 2.1 针孔相机畸变模型（Pinhole Camera Distortion Model）
+设归一化相机坐标系下的理想（未畸变）坐标为$(x,y)$，畸变后的坐标为$(x_d,y_d)$
+$$
+x = \frac{u-c_x}{f_x} \\
+y = \frac{v-c_y}{f_y}
+$$
+
+- **径向畸变（Radial Distortion）：** 
+  $$
+  \delta_{dr}=x(k_1r^2+k_2r^4+k_3r^6) \\
+  \delta_{dr}=y(k_1r^2+k_2r^4+k_3r^6)
+  $$
+- **切向畸变（Tangential Distortion）：** 
+  $$
+  \delta_{dt}=2p_1xy+p_2(r^2+2x^2) \\
+  \delta_{dt}=p_1(r^2+2y^2)+2p_2xy
+  $$
+- **总畸变模型：** 
+  $$\left\{ 
+  \begin{aligned}
+  x_d &= x+\delta_{dr}+\delta_{dt} = x(1+k_1r^2+k_2r^4+k_3r^6)+2p_1xy+p_2(r^2+2x^2) \\
+  y_d &= y+\delta_{dr}+\delta_{dt} = y(1+k_1r^2+k_2r^4+k_3r^6)+2p_1(r^2+2y^2)+2p_2xy \\
+  r^2 &= x^2+y^2
+  \end{aligned}
+  \right.$$
+
+- **不动点迭代（Fixed Point Iteration）求解：** 给定畸变后的坐标$(x_d,y_d)$ 和畸变系数 $k_1,k_2,k_3,p_1,p_2$ ，求解理想坐标$(x,y)$。迭代公式为：
+  - 初始值
+    $$x_0=x_d\\
+    y_0=y_d$$
+  - 迭代公式
+  $$\begin{aligned}
+  x_{n+1} &= \frac{x_n-2p_1x_ny_n-p_2(r_n^2+2x_n^2)}{1+k_1r_n^2+k_2r_n^4+k_3r_n^6} \\
+  y_{n+1} &= \frac{y_n-2p_1(r_n^2+2y_n^2)-2p_2x_ny_n}{1+k_1r_n^2+k_2r_n^4+k_3r_n^6} \\
+  r_n &= x_n^2+y_n^2
+  \end{aligned}$$
+
+<p align="center">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/radial_distort.png" height = "240">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/tangential_distort.png" height = "200">
+<br>经向畸变 & 切向畸变</p>
+

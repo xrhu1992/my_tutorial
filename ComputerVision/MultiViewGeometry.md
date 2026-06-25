@@ -202,8 +202,6 @@
   P_r =M_{rect,r} \dot {P_r}
   \end{aligned}$$
 
-
-
 - **STEP 4 - 应用旋转矩阵：** 将得到的旋转矩阵$R_{rect}$应用于两幅图像，完成极线校正。
   - 左右相机的旋转矩阵分别为
   $$
@@ -225,15 +223,113 @@
 --- 
 # 3. 三角测量（Triangulation）
 > [《多视图几何》-Chapter-12]()
-## 3.1 双目系统三角测量（Stereo Triangulation）
-### 3.1.1 双目系统模型
-设双目系统的相机参数分别为$K_1$和$K_2$，像素的齐次坐标分别为$x_1=[u_1,v_1,1]^T$和$x_2=[u_2,v_2,1]^T$，外参矩阵为$R_{12}$和$t_{12}$，摄像机矩阵分别为$P_1$和$P_2$，空间点在主相机1的坐标系下的齐次坐标为$X=[x,y,z,1]^T$，则有
+
+## 3.1 双目系统模型
+设双目系统的相机参数分别为 $K_1$ 和 $K_2$ ，像素的齐次坐标分别为 $\overrightarrow{x_1}=[u_1,v_1,1]^T$ 和 $\overrightarrow{x_2}=[u_2,v_2,1]^T$ ，外参矩阵为 $R_{12}$和$t_{12}$ ，摄像机矩阵分别为 $P_1$ 和 $P_2$ ，空间点在主相机1的坐标系下的齐次坐标为 $\overrightarrow{X}=[x,y,z,1]^T$ ，则有
 $$ \begin{aligned}
-z_{c1}\begin{bmatrix}u_1\\v_1\\1\end{bmatrix} &= K_1 [I | 0]X = P_1 X \\
-z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X \\
+z_{c1}\begin{bmatrix}u_1\\v_1\\1\end{bmatrix} &= K_1 [I | 0]\overrightarrow{X} = P_1 \overrightarrow{X} \\
+z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]\overrightarrow{X} = P_2 \overrightarrow{X} \\
 \end{aligned}$$
 
-### 3.1.2 二维匹配点的线性三角测量
+## 3.2 匹配点对（Matched Point）
+### 3.2.1 畸变的匹配点对计算问题
+理想情况下，假设匹配点对 $\overrightarrow{x_1}=[u_1,v_1,1]^T$ 和 $\overrightarrow{x_2}=[u_2,v_2,1]^T$ 均为无畸变像素坐标，若已知 $\overrightarrow{x_1}$ 的坐标 $u_1$ 、 $v_1$和 $\overrightarrow{x_2}$ 的横坐标 $u_2$（单目结构光），则可根据以下公式求解出 $\overrightarrow{x_2}$ 的纵坐标 $v_2$
+$$
+\overrightarrow{l_2} = F \overrightarrow{x_1}\\
+\overrightarrow{x_2}^T \overrightarrow{l_2} = 0
+$$ 
+然而 $\overrightarrow{x_1}$ 和 $\overrightarrow{x_2}$ 往往存在畸变，上述公式在畸变坐标系下不成立。假设畸变的匹配点对 $\overrightarrow{x_1^d}=[u_1^d,v_1^d,1]^T$ 和 $\overrightarrow{x_2^d}=[u_2^d,v_2^d,1]^T$ ，坐标 $\overrightarrow{x_1^d}$ 已知，其去畸变的坐标容易通过畸变参数获得
+$$\overrightarrow{x_1}=undist(\overrightarrow{x_1^d},K,k_1,k_2,k_3,p_1,p_2)$$
+而对于坐标 $\overrightarrow{x_2^d}$ ，由于仅知道横坐标 $u_2^d$ ，而纵坐标 $v_2^d$ 未知，无法通过畸变参数计算得到去畸变的坐标。以下提供几种方法来解决这个问题：
+
+> [!NOTE] 
+> 相机畸变模型的去畸变迭代公式，注意这里 $x_n$ 和 $y_n$ 是归一化相机坐标系下的坐标
+> $$\begin{aligned}
+> x_{n+1} &= \frac{x_n-2p_1x_ny_n-p_2(r_n^2+2x_n^2)}{1+k_1r_n^2+k_2r_n^4+k_3r_n^6} \\
+> y_{n+1} &= \frac{y_n-2p_1(r_n^2+2y_n^2)-2p_2x_ny_n}{1+k_1r_n^2+k_2r_n^4+k_3r_n^6} \\
+> r_n &= x_n^2+y_n^2
+> \end{aligned}$$
+
+### 3.2.2 迭代求解去畸变匹配点对
+- 1. **估计匹配点2的畸变纵坐标**：对已知点 $\overrightarrow{x_1^d}$ 其去畸变后得到理想坐标 $\overrightarrow{x_1}=[u_1,v_1,1]^T$ 。为了对点 $\overrightarrow{x_2^d}$ 去畸变，首先需要获得其纵坐标 $v_2^d$ 。将已知的横坐标点 $u_2^d$ 代入极线方程 $\overrightarrow{x_2^d}^T F \overrightarrow{x_1} = 0$ ，可估计出 $\hat{v_2^d}$，与真实的 $v_2^d$ 偏差不大；
+  $$
+  v_2^d \approx \hat{v_2^d} \\
+  \overrightarrow{x_2^d} = [u_2^d,\hat{v_2^d},1]^T
+  $$
+- 2. **匹配点2横坐标畸变校正**：这里只需要对水平坐标 $u_2^d$ 进行校正，首先将像素坐标归一化到相机坐标系下
+  $$
+  K_2^{-1}\begin{bmatrix}u_2^d\\v_2^d\\1\end{bmatrix} = k\begin{bmatrix}\overline{x_2}\\\overline{y_2}\\1\end{bmatrix} \\
+  \Downarrow \\
+  \overrightarrow{x_2^{norm}} = [\overline{x_2},\overline{y_2},1]^T
+  $$
+  再由迭代公式计算理想的横坐标 $u_2$ (注意将归一化坐标转回像素坐标，这里不再补充计算过程)
+  $$\begin{aligned}
+  x_{n+1} &= \frac{x_n-2p_1x_ny_n-p_2(r_n^2+2x_n^2)}{1+k_1r_n^2+k_2r_n^4+k_3r_n^6} \\
+  r_n &= x_n^2+y_n^2
+  \end{aligned}$$
+- 3. **由$F$计算理想匹配点2的纵坐标：** 上述已获得匹配点2的理想的横坐标 $u_2$，那么根据极线方程 $x_2^T F x_1=0$ 可以计算出理想纵坐标 $v_2$
+- 4. **理想纵坐标迭代：** 将 $v_2$ 代入步骤2中，得到新的精度更高的 $u_2$ ，再代入步骤3中，得到新的 $v_2$ 。由此不断提高 $u_2$ 和 $v_2$ 的精度，直到$u_2、v_2$前后两次迭代的差值小于阈值时，迭代终止。
+
+``` python
+import numpy as np
+
+def solve_projector_ideal(x_p_dist, l, Kp, Dp, max_iter=10, eps=1e-7):
+    """
+    x_p_dist : 投影仪解码出的畸变 x 像素坐标
+    l        : 投影仪域极线 (la, lb, lc), 定义在归一化坐标域
+    Kp       : 投影仪内参 (含 fx,fy,cx,cy)
+    Dp       : (k1,k2,p1,p2,k3)
+    返回      : 投影仪理想归一化坐标 (x, y)
+    """
+    fx, fy = Kp[0,0], Kp[1,1]
+    cx, cy = Kp[0,2], Kp[1,2]
+    k1,k2,p1,p2,k3 = Dp
+    la, lb, lc = l
+
+    x_d_obs = (x_p_dist - cx) / fx          # 实测 x 归一化(畸变域)
+    # 初值: 假设无畸变
+    x = x_d_obs
+    y = -(la * x + lc) / lb
+
+    for _ in range(max_iter):
+        r2 = x*x + y*y
+        radial = 1 + k1*r2 + k2*r2*r2 + k3*r2**3
+        dx_tang = 2*p1*x*y + p2*(r2 + 2*x*x)
+        x_new = (x_d_obs - dx_tang) / radial    # 畸变反演 x
+        y_new = -(la * x_new + lc) / lb         # 极线更新 y
+        if max(abs(x_new-x), abs(y_new-y)) < eps:
+            x, y = x_new, y_new
+            break
+        x, y = x_new, y_new
+    return x, y
+```
+
+- **优点：** 精度最高，最终匹配点能够完美满足对极几何约束。
+- **缺点：** 迭代计算耗费较多时间。
+
+### 3.2.3 利用畸变点标定的基础矩阵 $F^d$ 计算匹配点对计算
+通常情况下，基础矩阵 $F$ 是通过双目系统的内外参计算的，即
+$$F = K_2^{-T}  [\overrightarrow{t}] _\times RK_1^{-1}$$
+在公式 $\overrightarrow{x_2}^T F \overrightarrow{x_1}=0$ 中, $\overrightarrow{x_1}$ 和 $\overrightarrow{x_2}$ 均为去畸变后的像素坐标。当使用带有畸变的像素坐标 $\overrightarrow{x_1^d}$ 和 $\overrightarrow{x_2^d}$ ，可以得到新的基础矩阵 $F^d$ （可使用OpenCV中的`cv::findFundamentalMat()`函数计算）， $F^d$ 包含了部分畸变信息，用于匹配点计算时其精度相对 $F$ 更好，配合最小化几何误差（使用OpenCV中的`cv::correctMatchs()`函数）可进一步降低匹配误差。
+- **优点：** 计算简便，算力要求低。
+- **缺点：** 匹配点对的精度相对较低。
+
+### 3.2.4 使用参考平面/参考图像避免畸变影响
+- 待补充。。。
+
+### 3.2.5 最小化几何误差（Minimization of Geometric Error）
+双目匹配测量点往往是一组不满足对极几何约束的含噪声点对 $x \leftrightarrow x'$ ，实际对应图像点的正确值应该是在测量点附近的点 $\widehat{x} \leftrightarrow \widehat{x}'$ ,且精确满足对极几何约束 $\widehat{x}'^T F \widehat{x}=0$。为了计算这样的点对，寻找最小化误差函数（等价于最小化 $\widehat{X}$ 的反投影误差函数）
+$$\begin{aligned}
+&C(\mathbf{x},\mathbf{x'}) = d(\mathbf{x},\mathbf{\widehat{x}})+d(\mathbf{x'},\mathbf{\widehat{x}'}) \\
+and:\quad &\mathbf{\widehat{x}'}^T F \mathbf{\widehat{x}} = 0
+\end{aligned}$$
+可使用最大似然估计(MLE) 或 Levenberg-Marquardt 或 Sampson 算法来最小化误差函数。
+<p align="center">
+<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/minimization_of_geometric_error.png" width = "450">
+<br>最小化几何误差</p>
+
+## 3.3 双目系统三角测量（Stereo Triangulation）
+### 3.3.1 二维匹配点的线性三角测量
 > [OpenCV三角测量重建triangulatePoints原理解析](https://blog.csdn.net/weixin_43956164/article/details/124266267)
 - **核心思想：** 已知双目匹配点的像素位置，利用双目系统的空间关系，求解出空间点在相机坐标系下的空间坐标。
 - **适用场景：** 通过二维匹配获得匹配点对，如利用特征匹配进行稀疏重建。对应于OpenCV中的`cv::triangulatePoints()`函数。
@@ -314,16 +410,5 @@ z_{c2}\begin{bmatrix}u_2\\v_2\\1\end{bmatrix} &= K_2 [R_{12} | t_{12}]X = P_2 X 
 > \begin{bmatrix}x\\y\\z\\1\end{bmatrix}=0
 > $$
 > 该方程与之前推导的公式(3.1)相同。
-
-### 3.1.3 最小化几何误差（Minimization of Geometric Error）
-双目匹配测量点往往是一组不满足对极几何约束的含噪声点对 $x \leftrightarrow x'$ ，实际对应图像点的正确值应该是在测量点附近的点 $\widehat{x} \leftrightarrow \widehat{x}'$ ,且精确满足对极几何约束 $\widehat{x}'^T F \widehat{x}=0$。为了计算这样的点对，寻找最小化误差函数（等价于最小化 $\widehat{X}$ 的反投影误差函数）
-$$\begin{aligned}
-&C(\mathbf{x},\mathbf{x'}) = d(\mathbf{x},\mathbf{\widehat{x}})+d(\mathbf{x'},\mathbf{\widehat{x}'}) \\
-and:\quad &\mathbf{\widehat{x}'}^T F \mathbf{\widehat{x}} = 0
-\end{aligned}$$
-可使用最大似然估计(MLE) 或 Levenberg-Marquardt 或 Sampson 算法来最小化误差函数。
-<p align="center">
-<img src="https://pub-4f6dc840a1174fbebb56297e77b4fc2f.r2.dev/tutorial/minimization_of_geometric_error.png" width = "450">
-<br>最小化几何误差</p>
 
 
